@@ -63,21 +63,4 @@ class ListaSimple:
             self._head = temp
             return retorno
         
-if __name__ == "__main__":
-    lista = ListaSimple()
-
-    contador = 1
-    lista.addFirst(contador)
-    for i in range(2, 21, 2):
-        lista.addLast(i)
-
-    temp = lista._head
-    condicion = temp.getNext()
-    print("Lista tiene: ")
-    while condicion !=None:
-        print(temp.getData())
-        condicion = temp.getNext()
-        temp = temp.getNext()
-    
-    print("Eliminamos y queda: ")
     
