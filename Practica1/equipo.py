@@ -1,10 +1,14 @@
 class Equipo:
 
-    def __init__(self, nombre, NoPlaca, fecha, valor):
+    def __init__(self, nombre, NoPlaca, fecha, valor, empleado):
         self._nombre = nombre
         self._NoPlaca = NoPlaca
         self._fecha = fecha
         self._valor = valor
+        self._empleado = empleado
+
+    def __str__(self):
+        return f"{self.getNombre()} {self.getNoPlaca()} {self.getFecha().getDia():02d} {self.getFecha().getMes():02d} {self.getFecha().getA():02d} {self.getValor()}"
 
     #getters
     def getNombre(self):
@@ -19,6 +23,9 @@ class Equipo:
     def getValor(self):
         return self._valor
     
+    def getEmpleado(self):
+        return self._empleado
+    
     #setters
     def setNombre(self, nombre):
         self._nombre = nombre
@@ -31,6 +38,9 @@ class Equipo:
 
     def setValor(self, valor):
         self._valor = valor
+    
+    def setEmpleado(self, empleado):
+        self._empleado = empleado
 
     
     
