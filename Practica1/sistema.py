@@ -4,12 +4,14 @@ from equipo import Equipo
 from direccion import Direccion
 from administrador import Administrador
 from investigador import Investigador
+from listaDoble import ListaDoble
+from listaSimple import ListaSimple
 
 class Sistema:
     
     def __init__(self):
-        self._empleados = []
-        self._equipos = []
+        self._empleados = ListaSimple()
+        self._equipos = ListaDoble()
 
    # def agregarUsuario()
 
@@ -83,11 +85,11 @@ if __name__ == "__main__":
                     if id == cedulaP:
                         if descripcion1 == "administrador":
                             usuario1 = Administrador(nombre,id,Fecha(int(dia),int(mes),int(año)),ciudad_nacimiento,tel,email,Direccion(calle,ciudad,nomenclatura,barrio,edificio,apto))
-                            sistema._empleados.append(usuario1)
+                            sistema._empleados.addFirst(usuario1)
                         
                         elif descripcion1 == "investigador":
                             usuario1 = Investigador(nombre,id,Fecha(int(dia),int(mes),int(año)),ciudad_nacimiento,tel,email,Direccion(calle,ciudad,nomenclatura,barrio,edificio,apto))
-                            sistema._empleados.append(usuario1)
+                            sistema._empleados.addFirst(usuario1)
                 
 
     archivoPassword.close()
@@ -102,7 +104,7 @@ if __name__ == "__main__":
             empleado,cedula,nombre,NoPlaca,dia,mes,año,valor = equipo.split(" ")
             indice100 = sistema.busqueda(empleado)
             empleado1 = sistema._empleados[indice100]
-            equipo1 = Equipo(nombre,NoPlaca,Fecha(dia,mes,año),valor,empleado1)
+            equipo1 = Equipo(nombre,NoPlaca,Fecha(int(dia),int(mes),int(año)),valor,empleado1)
             empleado1.agregarEquipo(equipo1)
             sistema._equipos.append(equipo1)
 

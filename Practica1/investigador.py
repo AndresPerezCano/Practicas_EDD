@@ -8,4 +8,6 @@ class Investigador(Usuario):
 
     def agregarEquipo(self, equipo):
         self._equipos.append(equipo)
+
+    
     pass
