@@ -1,8 +1,5 @@
 # import 
 from nodoDoble import NodoDoble
-from direccion import Direccion
-from usuario import Usuario
-from fecha import Fecha
 
 # clase
 class ListaDoble():
