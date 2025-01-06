@@ -2,6 +2,8 @@ from usuario import Usuario
 from fecha import Fecha
 from equipo import Equipo
 from direccion import Direccion
+from administrador import Administrador
+from investigador import Investigador
 
 class Sistema:
     
@@ -52,8 +54,6 @@ class Sistema:
         
 
 
-        
-
 
 
 if __name__ == "__main__":
@@ -70,10 +70,27 @@ if __name__ == "__main__":
             nombre,id,fecha_nacimiento,ciudad_nacimiento,tel,email,dir = usuario.split("/")
             dia, mes, año = fecha_nacimiento.split("-")
             ciudad,calle,nomenclatura,barrio,edificio,apto = dir.split(" ")  
-            usuario1 = Usuario(nombre,id,Fecha(int(dia),int(mes),int(año)),ciudad_nacimiento,tel,email,Direccion(calle,ciudad,nomenclatura,barrio,edificio,apto))
-            sistema._empleados.append(usuario1)
+            
+            archivoPassword = open("Practica1/archivos/Password.txt","r")
+            
+            while True:
+                descripcion = archivoPassword.readline()
+                descripcion = descripcion.strip()
+                if not descripcion:
+                    break
+                else:
+                    cedulaP,contraseñaP,descripcion1 = descripcion.split(" ")
+                    if id == cedulaP:
+                        if descripcion1 == "administrador":
+                            usuario1 = Administrador(nombre,id,Fecha(int(dia),int(mes),int(año)),ciudad_nacimiento,tel,email,Direccion(calle,ciudad,nomenclatura,barrio,edificio,apto))
+                            sistema._empleados.append(usuario1)
+                        
+                        elif descripcion1 == "investigador":
+                            usuario1 = Investigador(nombre,id,Fecha(int(dia),int(mes),int(año)),ciudad_nacimiento,tel,email,Direccion(calle,ciudad,nomenclatura,barrio,edificio,apto))
+                            sistema._empleados.append(usuario1)
+                
 
-    archivoEmpleados.close()
+    archivoPassword.close()
 
     archivoEquipos = open("Practica1/archivosOp/inventarioInicial.txt","r")
     while True:
@@ -83,9 +100,8 @@ if __name__ == "__main__":
             break
         else:
             empleado,cedula,nombre,NoPlaca,dia,mes,año,valor = equipo.split(" ")
-            indice1 = sistema.busqueda(empleado)
-            print(indice1)
-            empleado1 = sistema._empleados[indice1]
+            indice100 = sistema.busqueda(empleado)
+            empleado1 = sistema._empleados[indice100]
             equipo1 = Equipo(nombre,NoPlaca,Fecha(dia,mes,año),valor,empleado1)
             empleado1.agregarEquipo(equipo1)
             sistema._equipos.append(equipo1)
@@ -93,17 +109,9 @@ if __name__ == "__main__":
 
     archivoEquipos.close()
 
-    print(sistema._equipos)
-    print(sistema._empleados[0]._equipos())
-
     cedula = int(input("Ingrese su documento: "))
     contraseña = input("Ingrese su contraseña: ")
     print(sistema.accesoSistema(cedula,contraseña))
 
-
-
-
-
-    equipo1 = Equipo("CAMARA_MONOCROMATICA",50109773,Fecha(9, 12, 2021), 786000)
 
     
