@@ -6,6 +6,7 @@ from administrador import Administrador
 from investigador import Investigador
 from listaDoble import ListaDoble
 from listaSimple import ListaSimple
+from nodoSimple import NodoSimple
 
 class Sistema:
     
@@ -47,11 +48,12 @@ class Sistema:
     def accesoInvestigador(self, cedula):
         pass
 
-    def busqueda(self, dato):
-        for i in range(len(self._empleados)):
-            empleado = self._empleados[i]
-            if empleado.getNombre() == dato:
-                return i
+    def busquedaEmpleado(self, empleado):
+        temp = self._empleados.first()
+        while(temp != None and temp.getData().getNombre() != empleado):
+            temp = temp.getNext()
+        return temp
+        
 
         
 
@@ -102,11 +104,10 @@ if __name__ == "__main__":
             break
         else:
             empleado,cedula,nombre,NoPlaca,dia,mes,año,valor = equipo.split(" ")
-            indice100 = sistema.busqueda(empleado)
-            empleado1 = sistema._empleados[indice100]
+            empleado1 = sistema.busquedaEmpleado(empleado).getData()
             equipo1 = Equipo(nombre,NoPlaca,Fecha(int(dia),int(mes),int(año)),valor,empleado1)
             empleado1.agregarEquipo(equipo1)
-            sistema._equipos.append(equipo1)
+            sistema._equipos.addFirst(equipo1)
 
 
     archivoEquipos.close()
