@@ -4,11 +4,17 @@ from listaDoble import ListaDoble
 class Investigador(Usuario):
 
     def __init__(self,nombre,cedula,fecha,ciudad_nacimiento,tel,email,direccion,equipos=None):
-        super().__init__(nombre,cedula,fecha,ciudad_nacimiento,tel,email,direccion)
+        super().__init__(nombre,int(cedula),fecha,ciudad_nacimiento,tel,email,direccion)
         self._equipos = ListaDoble()
 
     def agregarEquipo(self, equipo):
         self._equipos.addFirst(equipo)
 
-    
-    pass
+    def consultaEquipos(self):
+        print("_____________________________________________________________________________________________________________________________________")
+        print("Equipos a nombre de ",self.getNombre(),":",sep="")
+        temporal = self._equipos.first()
+        while temporal.getNext() != None:
+            print("*",temporal.getData(),sep="")
+            temporal = temporal.getNext()
+        print("_____________________________________________________________________________________________________________________________________")

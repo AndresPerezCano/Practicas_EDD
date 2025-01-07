@@ -23,22 +23,27 @@ class Sistema:
             password = password.strip()
             if not password:
                 archivoPassword.close()
-                return "El documento no esta registrado"
+                print("El documento no esta registrado")
+                break
             else:
                 cedulaP,contraseñaP,descripcion = password.split(" ")
                 if cedula == int(cedulaP):
                     if contraseña == contraseñaP:
                         archivoPassword.close()
                         if descripcion == "administrador":
+                            print("Ingreso como administrador concedido")
                             self.accesoAdministrador(int(cedula))
+                            break
                         
                         elif descripcion == "investigador":
+                            print("Ingreso como investigador concedido")
                             self.accesoInvestigador(int(cedula))
+                            break
 
-                        return "Ingreso concedido"
                     else:
                         archivoPassword.close()
-                        return "Contraseña incorrecta"
+                        print("Contraseña incorrecta")
+                        break
                 
     def accesoAdministrador(self, cedula):
         indice = self.busqueda(cedula)
@@ -46,13 +51,39 @@ class Sistema:
         pass
 
     def accesoInvestigador(self, cedula):
-        pass
+        empleado = self.busqueda(cedula,"empleado-ID")
+        while True:
+            print("Que proceso desea realizar:")
+            print("1.Consultar mis equipos.")
+            print("2.Salir.")
+            indice = int(input("Ingrese un indice:"))
+            if indice == 1:
+                empleado.getData().consultaEquipos()
+                indice12 = input("Desea realizar otra accion si/no:")
+                if indice12 == "si":
+                    pass
+                elif indice12 == "no":
+                    break
+            
+            elif indice == 2:
+                break
+            
+            else:
+                print("Indice no valido")
+        
 
-    def busquedaEmpleado(self, empleado):
+    def busqueda(self, dato,tipo):
         temp = self._empleados.first()
-        while(temp != None and temp.getData().getNombre() != empleado):
-            temp = temp.getNext()
-        return temp
+        if tipo == "empleado-nombre":
+            while(temp != None and temp.getData().getNombre() != dato):
+                temp = temp.getNext()
+            return temp
+        
+        elif tipo == "empleado-ID":
+            while(temp != None and temp.getData().getId() != dato):
+                temp = temp.getNext()
+            return temp
+
         
 
         
@@ -104,7 +135,7 @@ if __name__ == "__main__":
             break
         else:
             empleado,cedula,nombre,NoPlaca,dia,mes,año,valor = equipo.split(" ")
-            empleado1 = sistema.busquedaEmpleado(empleado).getData()
+            empleado1 = sistema.busqueda(empleado,"empleado-nombre").getData()
             equipo1 = Equipo(nombre,NoPlaca,Fecha(int(dia),int(mes),int(año)),valor,empleado1)
             empleado1.agregarEquipo(equipo1)
             sistema._equipos.addFirst(equipo1)
@@ -114,7 +145,10 @@ if __name__ == "__main__":
 
     cedula = int(input("Ingrese su documento: "))
     contraseña = input("Ingrese su contraseña: ")
-    print(sistema.accesoSistema(cedula,contraseña))
+    sistema.accesoSistema(cedula,contraseña)
+
+    #pruebas
+
 
 
     
