@@ -12,10 +12,13 @@ class Administrador(Usuario):
         self._equipos.addFirst(equipo)
 
     def consultaEquipos(self):
-        print("_____________________________________________________________________________________________________________________________________")
-        print("Equipos a nombre de ",self.getNombre(),":",sep="")
         temporal = self._equipos.first()
-        while temporal.getNext() != None:
-            print("*",temporal.getData(),sep="")
-            temporal = temporal.getNext()
-        print("_____________________________________________________________________________________________________________________________________")
+        if temporal != None:
+            print("_____________________________________________________________________________________________________________________________________")
+            print("Equipos a nombre de ",self.getNombre(),":",sep="")
+            while temporal.getNext() != None:
+                print("*",temporal.getData(),sep="")
+                temporal = temporal.getNext()
+            print("_____________________________________________________________________________________________________________________________________")
+        else:
+            print("No hay equipos a nombre de ",self.getNombre(),":",sep="")
