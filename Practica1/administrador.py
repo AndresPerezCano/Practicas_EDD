@@ -11,9 +11,6 @@ class Administrador(Usuario):
     def agregarEquipo(self, equipo):
         self._equipos.addFirst(equipo)
 
-    def registrarUsuario(self, nombre,cedula,fecha,ciudad_nacimiento,tel,email,direccion):
-        pass
-
     def consultaEquipos(self):
         print("_____________________________________________________________________________________________________________________________________")
         print("Equipos a nombre de ",self.getNombre(),":",sep="")

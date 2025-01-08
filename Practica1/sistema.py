@@ -1,3 +1,4 @@
+import os
 from direccion import Direccion
 from usuario import Usuario
 from fecha import Fecha
@@ -53,10 +54,13 @@ class Sistema:
         while True:
             print("Que proceso desea realizar:")
             print("1.Consultar mis equipos.")
-            print("2 Registrar usuarios.")
-            print("3.Salir.")
+            print("2. Registrar usuarios.")
+            print("3. Eliminar usuarios.")
+            print("4. cambiar contraseñas.")
+            print("5. Salir.")
             indice = int(input("Ingrese un indice: "))
-            if indice == 1:
+
+            if indice == 1: # Consulta equipos -----------------------------------------------------------------------
                 empleado.consultaEquipos()
                 indice12 = input("Desea realizar otra accion si/no:")
                 if indice12 == "si":
@@ -64,9 +68,9 @@ class Sistema:
                 elif indice12 == "no":
                     break
             
-            elif indice == 2:
+            elif indice == 2: # Registro usuario -------------------------------------------------------------------
                 print("Ingrese los datos para registrar al nuevo usuario: ")
-                # Pedimos todos los datos necesarios -------------------------------------------------------------
+                # Pedimos todos los datos necesarios -----------------------------------
                 rol =  input("Rol del nuevo usuario: (investigador o administrador): ")
                 datosUsuario = input("Nombre, cedula, ciudad de nacimiento, telefono e email separados por espacios: ")
                 nombre, cedu, ciudad_na, tel, email = datosUsuario.split(" ")
@@ -83,11 +87,9 @@ class Sistema:
                 dir = Direccion(calle, ciudad, nomenclatura, barrio, edificio, apto)
 
                 contrasenia = input("Ingrese una contraseña para el usuario: ")
-                # Creamos el usuario-----------------------------------------------------------------------------------
+                # Creamos el usuario------------------------------------------------
                 if rol == "administrador" or "Administrador":
                     usuNuevo = Administrador(nombre, int(cedu), fecha,ciudad_na, int(tel), email, dir)
-                    inventary = open(f"Practica1/archivosOp/{nombre} {cedu}.txt", "x")
-                    inventary.close()
 
                     contras = open("Practica1/archivos/password.txt", "r+")
                     contras.read()
@@ -103,8 +105,6 @@ class Sistema:
 
                 elif rol == "investigador" or "Investigador":
                     usuNuevo = Investigador(nombre, int(cedu), fecha,ciudad_na, int(tel), email, dir)
-                    inventary = open(f"Practica1/archivosOp/{nombre} {cedu}.txt", "x")
-                    inventary.close()
 
                     contras = open("Practica1/archivos/password.txt", "r+")
                     contras.read()
@@ -117,13 +117,137 @@ class Sistema:
                     texto = usuNuevo.__str__()
                     docuUsuarios.write(texto)
                     docuUsuarios.close()
-                    
+
                 else:
                     print("Error en la elección del rol del usuario")
                     pass
-            elif indice == 3:
+
+            elif indice == 3: # Eliminación usuario ------------------------------------------------
+                cedu = int(input("ingrese el documento del usuario que quiera eliminar: "))
+                busqueda = self.busqueda(cedu, "empleado-ID")
+                if busqueda is not None:
+                    usuEliminar = busqueda.getData()
+                    print(usuEliminar)
+
+                    # Eliminar contraseña ---------------------------------------------
+                    with open("Practica1/archivos/Password.txt", "r") as archivo:
+                        # Leemos el contenido y procesamos
+                        texto = archivo.read().replace("\n", " ")
+                        texto2 = texto.split(" ")
+
+                    cedula = usuEliminar.getId() # Cedula a eliminar
+                    if str(cedula) in texto2:
+                        indice = texto2.index(str(cedula))
+                        contra = texto2[indice + 1]
+                        rol = texto2[indice + 2]
+                        print(contra, rol)    
+                        # Eliminamos la cédula, la contraseña y el rol
+                        texto2.pop(indice + 2)  # Rol
+                        texto2.pop(indice + 1)  # Contraseña
+                        texto2.pop(indice)      # Cedula
+                    # Reescribimos el documento contraseña ---------------------------
+                    with open("Practica1/archivos/Password.txt", "w") as archivo:
+                        contador = 0
+                        for i in texto2:
+                            contador += 1
+                            if contador != 3:
+                                archivo.write(i + " ")
+                            else:
+                                if i is not texto2[-1]:
+                                    archivo.write(i + "\n")
+                                    contador = 0
+                                else:
+                                    archivo.write(i)
+                                    contador = 0
+
+                    # Eliminamos su registro en la lista de empleados -----------------
+                    with open("Practica1/archivos/Empleados.txt", "r") as archivo:
+                        # Leemos el contenido y procesamos
+                        texto = archivo.read().split("\n")
+
+                    Usuario = usuEliminar.__str__()
+                    # Verificamos si la cédula está en el contenido
+                    if Usuario in texto:
+                        print("Se ha eliminado correctamente")
+                        texto.remove(Usuario)
+
+                    with open("Practica1/archivos/Empleados.txt", "w") as archivo:
+                        for i in texto:
+                            if i is not texto[-1]:
+                                archivo.write(i + "\n")
+                            else:
+                                archivo.write(i)
+                    
+                    # Eliminamos el Nodo del empleado y el texto de inventario: 
+                    temp = self._empleados._head
+                    while temp.getData()!=usuEliminar:
+                        prev = temp
+                        temp = temp.getNext()
+                    if temp == self._empleados._head:
+                        self._empleados._head = temp.getNext()
+                        temp.setNext(None)
+                    else:
+                        apuntador = temp.getNext()
+                        prev.setNext(apuntador)
+                        temp.setNext(None)
+
+                    # Eliminar del inventario general ---------------------------------------------
+                    with open("Practica1/archivosOp/inventarioInicial.txt", "r") as archivo:
+                        # Leemos el contenido y procesamos
+                        texto = archivo.read().split("\n")
+
+                        nombre = usuEliminar.getNombre()
+                        # Guardamos en textoNuevo el inventario actualizado
+                        textoNuevo = []
+                        for i in texto:
+                            temp = i.split(" ")
+                            if nombre not in temp:
+                                textoNuevo.append(i)
+                                
+                    # Reescribimos 
+                    with open("Practica1/archivosOp/inventarioInicial.txt", "w") as archivo:
+                        contador = 1
+                        for i in textoNuevo:
+                            if contador != len(textoNuevo):
+                                archivo.write(f"{i}\n")
+                            else:
+                                archivo.write(i)
+                            contador+=1
+
+                else:
+                    print("No se encontró el usuario a eliminar")
+
+            elif indice == 4:
+                # Cambiar contraseña ---------------------------------------------
+                print("Ingrese la cédula del usuario al que le va a cambiar la contraseña: ")
+                ceduCambio = input()
+
+                with open("Practica1/archivos/Password.txt", "r") as archivo:
+                    # Leemos el contenido y procesamos
+                    texto = archivo.read().split("\n")
+                    
+                    captura = ""
+                    indiceText = 0
+                    for i in texto:
+                        temp = i.split(" ")
+                        if ceduCambio in temp:
+                            indice = temp.index(ceduCambio)
+                            rol = temp[indice+2]
+                            nuevaContra = input("Ingrese la nueva contraseña: ")
+                            indiceText = texto.index(i)
+                            texto[indiceText] = f"{ceduCambio} {nuevaContra} {rol}"
+                # Reescribimos 
+                with open("Practica1/archivos/Password.txt", "w") as archivo:
+                    contador = 1
+                    for i in texto:
+                        if contador != len(texto):
+                            archivo.write(f"{i}\n")
+                        else:
+                            archivo.write(i)
+                        contador+=1
+
+            elif indice == 5:
                 break
-            
             else:
                 print("Indice no valido")
 
