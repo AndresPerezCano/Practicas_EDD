@@ -192,7 +192,7 @@ class Sistema:
                         temp.setNext(None)
 
                     # Eliminar del inventario general ---------------------------------------------
-                    with open("Practica1/archivosOp/inventarioInicial.txt", "r") as archivo:
+                    with open("Practica1/archivosSistema/inventarioInicial.txt", "r") as archivo:
                         # Leemos el contenido y procesamos
                         texto = archivo.read().split("\n")
 
@@ -205,7 +205,7 @@ class Sistema:
                                 textoNuevo.append(i)
                                 
                     # Reescribimos 
-                    with open("Practica1/archivosOp/inventarioInicial.txt", "w") as archivo:
+                    with open("Practica1/archivosSistema/inventarioInicial.txt", "w") as archivo:
                         contador = 1
                         for i in textoNuevo:
                             if contador != len(textoNuevo):
@@ -257,7 +257,10 @@ class Sistema:
         while True:
             print("Que proceso desea realizar:")
             print("1.Consultar mis equipos.")
-            print("2.Salir.")
+            print("2.Adicionar equipo.")
+            print("3.Eliminar equipo.")
+            print("4.Consulta estado solicitudes.")
+            print("5.Salir.")
             indice = int(input("Ingrese un indice:"))
             if indice == 1:
                 empleado.getData().consultaEquipos()
@@ -266,8 +269,31 @@ class Sistema:
                     pass
                 elif indice12 == "no":
                     break
-            
             elif indice == 2:
+                empleado.getData().adicionarEquipo()
+                indice12 = input("Desea realizar otra accion si/no:")
+                if indice12 == "si":
+                    pass
+                elif indice12 == "no":
+                    break
+
+            elif indice == 3:
+                empleado.getData().eliminarEquipo()
+                indice12 = input("Desea realizar otra accion si/no:")
+                if indice12 == "si":
+                    pass
+                elif indice12 == "no":
+                    break
+
+            elif indice == 4: 
+                empleado.getData().consultaEstadoSolicitudes()
+                indice12 = input("Desea realizar otra accion si/no:")
+                if indice12 == "si":
+                    pass
+                elif indice12 == "no":
+                    break
+            
+            elif indice == 5:
                 break
             
             else:
@@ -329,7 +355,7 @@ if __name__ == "__main__":
 
     archivoPassword.close()
 
-    archivoEquipos = open("Practica1/archivosOp/inventarioInicial.txt","r")
+    archivoEquipos = open("Practica1/archivosSistema/inventarioInicial.txt","r")
     while True:
         equipo = archivoEquipos.readline()
         equipo = equipo.strip()
