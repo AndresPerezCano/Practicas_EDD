@@ -260,18 +260,20 @@ class Sistema:
             print("2.Adicionar equipo.")
             print("3.Eliminar equipo.")
             print("4.Consulta estado solicitudes.")
-            print("5.Salir.")
+            print("5.Generar archivo inventario.")
+            print("6.Generar archivo solicitudes.")
+            print("7.Salir.")
             indice = int(input("Ingrese un indice:"))
             if indice == 1:
                 empleado.getData().consultaEquipos()
-                indice12 = input("Desea realizar otra accion si/no:")
+                indice12 = input("Desea realizar otra accion si/no: ")
                 if indice12 == "si":
                     pass
                 elif indice12 == "no":
                     break
             elif indice == 2:
                 empleado.getData().adicionarEquipo()
-                indice12 = input("Desea realizar otra accion si/no:")
+                indice12 = input("Desea realizar otra accion si/no: ")
                 if indice12 == "si":
                     pass
                 elif indice12 == "no":
@@ -279,7 +281,7 @@ class Sistema:
 
             elif indice == 3:
                 empleado.getData().eliminarEquipo()
-                indice12 = input("Desea realizar otra accion si/no:")
+                indice12 = input("Desea realizar otra accion si/no: ")
                 if indice12 == "si":
                     pass
                 elif indice12 == "no":
@@ -287,13 +289,29 @@ class Sistema:
 
             elif indice == 4: 
                 empleado.getData().consultaEstadoSolicitudes()
-                indice12 = input("Desea realizar otra accion si/no:")
+                indice12 = input("Desea realizar otra accion si/no: ")
                 if indice12 == "si":
                     pass
                 elif indice12 == "no":
                     break
             
             elif indice == 5:
+                empleado.getData().archivoInventario()
+                indice12 = input("Desea realizar otra accion si/no: ")
+                if indice12 == "si":
+                    pass
+                elif indice12 == "no":
+                    break
+
+            elif indice == 6:
+                empleado.getData().archivoSolicitudes()
+                indice12 = input("Desea realizar otra accion si/no: ")
+                if indice12 == "si":
+                    pass
+                elif indice12 == "no":
+                    break
+
+            elif indice == 7:
                 break
             
             else:

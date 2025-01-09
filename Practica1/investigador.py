@@ -64,14 +64,59 @@ class Investigador(Usuario):
                             else:
                                 codigo = equipo.split(" ")[3]
                                 if codigo == solicitud[2]:
-                                    print(f"* {self._nombre} {self._id} ",*equipo.split(" ")[2:],*solicitud[4:])
+                                    print(f"* {self._nombre} {self._id}",*equipo.split(" ")[2:],*solicitud[4:])
                             
                     elif len(solicitud) == 10:
                         print("*",*solicitud,)
         print("______________________________________________________________________________________________________________________")
        
+    def archivoInventario(self):
+        temp = self._equipos.first()
+        inventario = open(f"Practica1/archivos/{self._nombre} {self._id}.txt","w")
+        while temp != None:
+            inventario.write(f"{temp.getData()}\n")
+            temp = temp.getNext()        
+        inventario.close()
+    
+    def archivoSolicitudes(self):
+        archivo = open("Practica1/archivosSistema/solicitudes.txt", "r")
+        archivoSolicitudes = open(f"Practica1/archivos/solicitudes {self._nombre} {self._id}.txt","w")
+        while True:
+            solicitud = archivo.readline()
+            solicitud = solicitud.strip()
+            if not solicitud:
+                archivo.close()
+                break
+            else:
+                listaSolicitud = solicitud.split(" ")
+                if int(listaSolicitud[1]) == self._id:
+                    if len(listaSolicitud) == 6:
+                        historialI = open("Practica1/archivosSistema/inventarioInicial.txt","r")
+                        while True:
+                            equipo = historialI.readline()
+                            equipo = equipo.strip()
+                            if not equipo:
+                                historialI.close()
+                                break
+                            else:
+                                codigo = equipo.split(" ")[3]
+                                if codigo == listaSolicitud[2]:
+                                    stringEquipo = " ".join(equipo.split(" ")[2:])
+                                    stringSolicitud = " ".join(listaSolicitud[4:])
+                                    archivoSolicitudes.write(f"{self._nombre} {self._id} {stringEquipo} {stringSolicitud}\n")
+                            
+                    elif len(listaSolicitud) == 10:
+                        archivoSolicitudes.write(f"{solicitud}\n")
+                
+        archivoSolicitudes.close()
+
+                    
+                    
 
 
+                            
+
+    
 
 
 
