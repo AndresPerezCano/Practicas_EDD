@@ -25,7 +25,7 @@ class Investigador(Usuario):
 
     def adicionarEquipo(self):
         print("Ingrese los siguientes datos con espacios de por medio:")
-        datos = input("nombre del equipo - No.Placa - fecha de compra(dia mes año) - valor de compra:")
+        datos = input("nombre del equipo - No.Placa - fecha de compra(dia mes año) - valor de compra: ")
         nombreE,NoPlaca,dia,mes,año,valor = datos.split(" ")
         archivo = open("Practica1/archivosSistema/solicitudes.txt", "a")
         archivo.write(f"{self._nombre} {self._id} {nombreE} {NoPlaca} {dia} {mes} {año} {valor} agregar pendiente\n")
