@@ -36,7 +36,7 @@ class Investigador(Usuario):
         codigo = int(input("Ingrese el codigo del equipo: "))
         descripcion = input("Escriba una breve explicacion de porque se desea eliminar: ")
         archivo = open("Practica1/archivosSistema/solicitudes.txt", "a")
-        archivo.write(f"{self._nombre} {self._id} {codigo} {descripcion.replace(" ","_")} eliminar pendiente\n")
+        archivo.write(f"{self._nombre} {self._id} {codigo} {descripcion.replace(' ','_')} eliminar pendiente\n")
         archivo.close()
         print("Solicitud realizada con exito: ")
 

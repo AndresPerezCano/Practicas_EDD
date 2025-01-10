@@ -22,3 +22,16 @@ class Administrador(Usuario):
             print("_____________________________________________________________________________________________________________________________________")
         else:
             print("No hay equipos a nombre de ",self.getNombre(),":",sep="")
+
+    def generarDocInventario(self, usuario):
+        nombre = usuario.getNombre()
+        cedula = usuario.getId()
+        t = open(f"Practica1/archivosOp/{nombre} {cedula}.txt", "w")
+
+        temp = usuario._equipos.first()
+        while temp != None:
+            if temp != usuario._equipos.last():
+                t.write(f"{temp.getData().__str__()}\n")
+            else:
+                t.write(temp.getData().__str__())
+            temp = temp.getNext()

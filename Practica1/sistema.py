@@ -57,7 +57,8 @@ class Sistema:
             print("2. Registrar usuarios.")
             print("3. Eliminar usuarios.")
             print("4. cambiar contraseñas.")
-            print("5. Salir.")
+            print("5. Generar inventario en txt.")
+            print("6. Salir.")
             indice = int(input("Ingrese un indice: "))
 
             if indice == 1: # Consulta equipos -----------------------------------------------------------------------
@@ -247,6 +248,16 @@ class Sistema:
                         contador+=1
 
             elif indice == 5:
+                cc = int(input("Ingrese el Id del empleado para generar el txt: "))
+                nodo = self.busqueda(cc, "empleado-ID")
+                if nodo != None:
+                    encontrado = nodo.getData()
+                    empleado.generarDocInventario(encontrado)
+                    print("Operación realizada con exito.")
+                else: 
+                    print("Cedula incorrecta, vuelva a intentarlo")
+
+            elif indice == 6:
                 break
             else:
                 print("Indice no valido")
