@@ -261,7 +261,7 @@ class Sistema:
             elif indice == 6:
                 # Atender solicitudes
                 # leer solicitudes en Control de cambio
-                control = open("solis.txt", "r") 
+                control = open("Practica1/archivosSistema/solicitudes.txt", "r") 
                 texto = control.read().split("\n")
                 indu = int(input("¿Qué categoría desea ver? (1. eliminar 2. agregar) equipos: "))
 
@@ -305,7 +305,7 @@ class Sistema:
                             texto[indice] = concatenar
                             
                             # Actualizar inventario general
-                            t = open("solisdeberas.txt" , "r+")
+                            t = open("Practica1/archivosSistema/inventarioInicial.txt" , "r+")
                             t.read()
                             t.write("\n")
                             inventario = texto[indice].split(" ")
@@ -318,7 +318,7 @@ class Sistema:
                                     t.write(f"{i} ")
                         else: 
                             print("índice no válido")
-                        j = open("solis.txt", "w")
+                        j = open("Practica1/archivosSistema/solicitudes.txt", "w")
                         for i in texto:
                             if i is not texto[-1]:
                                 j.write(f"{i}\n")
@@ -331,8 +331,46 @@ class Sistema:
                         if "eliminar" in separado:
                             print(f"{contador}. {i}")
                         contador+=1
-                        
 
+                    soli = int(input("Seleccione la solicitud que desea atender: "))
+                    soli-=1
+                    serieEquipo = texto[soli].split(" ")
+                    serie = int(serieEquipo[2])
+
+                    # recorrer lista equipos 
+                    print(serie)
+                    temp = self._equipos.first()
+                    while True:
+                        if int(temp.getData().getNoPlaca()) == int(serie):
+                            break
+                        elif temp == None:
+                            break
+                        temp = temp.getNext()
+
+
+                    if temp!=None:
+                        self._equipos.remove(temp.getData())
+
+                        buscar = open("Practica1/archivosSistema/inventarioInicial.txt", "r")
+                        tex = buscar.read().split("\n")
+                        for i in tex:
+                            separao = i.split(" ")
+                            if int(separao[3]) == int(serie):
+                                tex.remove(i)
+                        buscar.close()
+                        with open("Practica1/archivosSistema/inventarioInicial.txt", "w") as ree:
+                            for i in tex:
+                                if i == tex[-1]:
+                                    ree.write(i)  
+                                else:
+                                    ree.write(i+"\n")
+
+                        print("Se ha eliminado correctamente")
+
+
+                        
+                    else: 
+                        print("No fue posible eliminar el equipo")
                 else:
                     print("Indice inválido")
 
