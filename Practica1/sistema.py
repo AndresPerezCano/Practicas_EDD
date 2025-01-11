@@ -335,6 +335,9 @@ class Sistema:
                     soli = int(input("Seleccione la solicitud que desea atender: "))
                     soli-=1
                     serieEquipo = texto[soli].split(" ")
+                    if "pendiente" not in serieEquipo:
+                        print("La solicitud ya fue contestada.")
+                        pass
                     serie = int(serieEquipo[2])
 
                     # recorrer lista equipos 
