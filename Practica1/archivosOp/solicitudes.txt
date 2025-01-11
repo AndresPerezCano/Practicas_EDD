@@ -1,5 +1,4 @@
 Marta-Gonzales 3345345535 50109775 si eliminar pendiente
 Marta-Gonzales 3345345535 TELEFONO_IP 23343333 01 04 2006 234234 agregar pendiente
-Marta-Gonzales 3345345535 50245312 si eliminar aceptado
+Marta-Gonzales 3345345535 50245312 si eliminar pendiente
 Alberto-Suarez 3335345535 TELEFONO_IP 23444443 01 04 2006 234234 agregar pendiente
-
