@@ -341,9 +341,9 @@ class Sistema:
                     print(serie)
                     temp = self._equipos.first()
                     while True:
-                        if int(temp.getData().getNoPlaca()) == int(serie):
+                        if temp == None:
                             break
-                        elif temp == None:
+                        elif int(temp.getData().getNoPlaca()) == int(serie):
                             break
                         temp = temp.getNext()
 
@@ -527,7 +527,7 @@ if __name__ == "__main__":
             empleado1 = sistema.busqueda(empleado,"empleado-nombre").getData()
             equipo1 = Equipo(nombre,NoPlaca,Fecha(int(dia),int(mes),int(año)),valor,empleado1)
             empleado1.agregarEquipo(equipo1)
-            sistema._equipos.addFirst(equipo1)
+            sistema._equipos.addLast(equipo1)
 
 
     archivoEquipos.close()

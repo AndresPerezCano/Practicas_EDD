@@ -10,6 +10,5 @@ Demetrio-Zapata 3277122442 CAMARA_BASIER 50109829 01 02 2023 2734000 agregar pen
 Andr�s-P�rez 1035973301 CPURYZEN_6T_4GB 50661233 03 09 2014 1590000 agregar pendiente
 Andr�s-P�rez 1035973301 TODO_EN_UNO_IMAC_27 50661259 09 12 2020 11862048 agregar pendiente
 Andr�s-P�rez 1035973301 CAMARA_BASIER 50109830 01 02 2023 2734000 agregar pendiente
-Andr�s-P�rez 1035973301 DRON_MAT300 50234584 01 02 2000 17568000 agregar pendiente
 Andr�s-P�rez 1035973301 50661220 ya_no_lo_necesito eliminar pendiente
-Andr�s-P�rez 1035973301 50661234 no_lo_se_pa eliminar pendiente
+Andr�s-P�rez 1035973301 SILLA_GIRATORIA 60000000 02 03 2000 28288228 agregar pendiente

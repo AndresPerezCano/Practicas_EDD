@@ -8,7 +8,7 @@ class Investigador(Usuario):
         self._equipos = ListaDoble()
 
     def agregarEquipo(self, equipo):
-        self._equipos.addFirst(equipo)
+        self._equipos.addLast(equipo)
 
     def consultaEquipos(self):
         temporal = self._equipos.first()

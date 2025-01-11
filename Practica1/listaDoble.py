@@ -39,11 +39,17 @@ class ListaDoble():
             self._size += 1
 
     def addLast(self, objeto):
-        temp = self._tail
-        self._tail = NodoDoble(objeto)
-        self._tail.setPrev(temp)
-        temp.setNext(self._tail)
-        self._size += 1
+        if self.isEmpty():
+            self._head = NodoDoble(objeto)
+            self._tail = self._head
+            self._size += 1
+
+        else:
+            temp = self._tail
+            self._tail = NodoDoble(objeto)
+            self._tail.setPrev(temp)
+            temp.setNext(self._tail)
+            self._size += 1
 
     def removeFirst(self):
         temp = self._head
