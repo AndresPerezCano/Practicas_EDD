@@ -15,7 +15,7 @@ class Investigador(Usuario):
         if temporal != None:
             print("______________________________________________________________________________________________________________________")
             print("Equipos a nombre de ",self.getNombre(),":",sep="")
-            while temporal.getNext() != None:
+            while temporal != None:
                 print("*",temporal.getData(),sep="")
                 temporal = temporal.getNext()
             print("______________________________________________________________________________________________________________________")

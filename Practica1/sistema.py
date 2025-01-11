@@ -457,6 +457,22 @@ class Sistema:
                 temp = temp.getNext()
             return temp
 
+    def ordenar(self,tipo):
+        if "equipos" == tipo:
+            nodo = self._equipos.first()
+            while nodo:
+                nodo2 = nodo.getNext()
+                while nodo2:
+                    if nodo.getData().getNoPlaca() > nodo2.getData().getNoPlaca():
+                        self.intercambiar(nodo,nodo2)
+                    nodo2 = nodo2.getNext()
+                nodo = nodo.getNext()
+
+    def intercambiar(self,primero,segundo):
+        temporal = primero.getData()
+        primero.setData(segundo.getData())
+        segundo.setData(temporal)
+
         
 
         
@@ -516,11 +532,19 @@ if __name__ == "__main__":
 
     archivoEquipos.close()
 
+    #sistema.ordenar("equipos")
+
     cedula = int(input("Ingrese su documento: "))
     contraseña = input("Ingrese su contraseña: ")
     sistema.accesoSistema(cedula,contraseña)
 
-    #pruebas
+
+    #archivo = open("Practica1/archivosSistema/inventarioInicial.txt","w")
+    #temporal = sistema._equipos.first()
+    #while temporal != None:
+    #    archivo.write(f"{temporal.getData().getEmpleado().getNombre()} {temporal.getData().getEmpleado().getId()} {temporal.getData()}\n")
+    #    temporal = temporal.getNext()
+    #archivo.close()
 
 
 

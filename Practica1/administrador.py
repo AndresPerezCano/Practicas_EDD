@@ -14,12 +14,12 @@ class Administrador(Usuario):
     def consultaEquipos(self):
         temporal = self._equipos.first()
         if temporal != None:
-            print("_____________________________________________________________________________________________________________________________________")
+            print("________________________________________________________________________________________________________________________")
             print("Equipos a nombre de ",self.getNombre(),":",sep="")
-            while temporal.getNext() != None:
+            while temporal != None:
                 print("*",temporal.getData(),sep="")
                 temporal = temporal.getNext()
-            print("_____________________________________________________________________________________________________________________________________")
+            print("________________________________________________________________________________________________________________________")
         else:
             print("No hay equipos a nombre de ",self.getNombre(),":",sep="")
 
