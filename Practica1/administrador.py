@@ -26,7 +26,7 @@ class Administrador(Usuario):
     def generarDocInventario(self, usuario):
         nombre = usuario.getNombre()
         cedula = usuario.getId()
-        t = open(f"Practica1/archivosOp/{nombre} {cedula}.txt", "w")
+        t = open(f"Practica1/archivos/{nombre} {cedula}.txt", "w")
 
         temp = usuario._equipos.first()
         while temp != None:
