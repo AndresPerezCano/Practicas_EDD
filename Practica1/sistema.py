@@ -305,25 +305,25 @@ class Sistema:
                             texto[indice] = concatenar
                             
                             # Actualizar inventario general
-                            t = open("Practica1/archivosSistema/inventarioInicial.txt" , "r+")
-                            t.read()
-                            t.write("\n")
-                            inventario = texto[indice].split(" ")
-                            inventario.pop(-1)
-                            inventario.pop(-1)
-                            for i in inventario:
-                                if i == inventario[-1]:
-                                    t.write(i)
-                                else: 
-                                    t.write(f"{i} ")
+                            with open("Practica1/archivosSistema/inventarioInicial.txt" , "r+") as t:
+                                t.read()
+                                t.write("\n")
+                                inventario = texto[indice].split(" ")
+                                inventario.pop(-1)
+                                inventario.pop(-1)
+                                for i in inventario:
+                                    if i == inventario[-1]:
+                                        t.write(i)
+                                    else: 
+                                        t.write(f"{i} ")
                         else: 
                             print("índice no válido")
-                        j = open("Practica1/archivosSistema/solicitudes.txt", "w")
-                        for i in texto:
-                            if i is not texto[-1]:
-                                j.write(f"{i}\n")
-                            else:
-                                j.write(f"{i}")
+                        with open("Practica1/archivosSistema/solicitudes.txt", "w") as j:
+                            for i in texto:
+                                if i is not texto[-1]:
+                                    j.write(f"{i}\n")
+                                else:
+                                    j.write(f"{i}")
                 elif indu==1:
                     contador = 1
                     for i in texto:
@@ -341,9 +341,9 @@ class Sistema:
                     print(serie)
                     temp = self._equipos.first()
                     while True:
-                        if temp == None:
+                        if int(temp.getData().getNoPlaca()) == int(serie):
                             break
-                        elif int(temp.getData().getNoPlaca()) == int(serie):
+                        elif temp == None:
                             break
                         temp = temp.getNext()
 
@@ -457,22 +457,6 @@ class Sistema:
                 temp = temp.getNext()
             return temp
 
-    def ordenar(self,tipo):
-        if "equipos" == tipo:
-            nodo = self._equipos.first()
-            while nodo:
-                nodo2 = nodo.getNext()
-                while nodo2:
-                    if nodo.getData().getNoPlaca() > nodo2.getData().getNoPlaca():
-                        self.intercambiar(nodo,nodo2)
-                    nodo2 = nodo2.getNext()
-                nodo = nodo.getNext()
-
-    def intercambiar(self,primero,segundo):
-        temporal = primero.getData()
-        primero.setData(segundo.getData())
-        segundo.setData(temporal)
-
         
 
         
@@ -527,24 +511,16 @@ if __name__ == "__main__":
             empleado1 = sistema.busqueda(empleado,"empleado-nombre").getData()
             equipo1 = Equipo(nombre,NoPlaca,Fecha(int(dia),int(mes),int(año)),valor,empleado1)
             empleado1.agregarEquipo(equipo1)
-            sistema._equipos.addLast(equipo1)
+            sistema._equipos.addFirst(equipo1)
 
 
     archivoEquipos.close()
-
-    #sistema.ordenar("equipos")
 
     cedula = int(input("Ingrese su documento: "))
     contraseña = input("Ingrese su contraseña: ")
     sistema.accesoSistema(cedula,contraseña)
 
-
-    #archivo = open("Practica1/archivosSistema/inventarioInicial.txt","w")
-    #temporal = sistema._equipos.first()
-    #while temporal != None:
-    #    archivo.write(f"{temporal.getData().getEmpleado().getNombre()} {temporal.getData().getEmpleado().getId()} {temporal.getData()}\n")
-    #    temporal = temporal.getNext()
-    #archivo.close()
+    #pruebas
 
 
 
