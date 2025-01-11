@@ -52,7 +52,7 @@ class Sistema:
         empleado = indice.getData()
 
         while True:
-            print("Que proceso desea realizar:")
+            print("\nQue proceso desea realizar:")
             print("1.Consultar mis equipos.")
             print("2. Registrar usuarios.")
             print("3. Eliminar usuarios.")
@@ -261,74 +261,80 @@ class Sistema:
             elif indice == 6:
                 # Atender solicitudes
                 # leer solicitudes en Control de cambio
-                control = open("Practica1/archivosOp/solicitudes.txt", "r+") 
+                control = open("solis.txt", "r") 
                 texto = control.read().split("\n")
-                print("Imprimimos todas las solicitudes")
+                indu = int(input("¿Qué categoría desea ver? (1. eliminar 2. agregar) equipos: "))
 
-                contador = 1
-                for i in texto:
-                    print(f"{contador}. {i}")
-                    contador+=1
+                if indu==2:
 
-                indice = int(input("Selecione la solicitud que desea revisar: "))
-                indice = indice-1
-                comparador = texto[indice].split(" ")
-                if "pendiente" not in comparador:
-                    print("La solicitud ya fue contestada.")
-                else: 
-                    respuesta = int(input("Desea 1. rechazar o 2. aceptar, indique el número de su respuesta: "))
-                    if respuesta == 1:
-                        nuevo = texto[indice].split(" ")
-                        nuevo[-1] = "rechazar"
-                        print("operación realizada con éxito")
-                        concatenar = ""
-                        for i in nuevo:
-                            if i is not nuevo[-1]:
-                                concatenar+=i+" "
-                            else:
-                                concatenar+=i
-                        texto[indice] = concatenar
-                        j = open("Practica1/archivosOp/solicitudes.txt", "w")
+                    contador = 1
+                    for i in texto:
+                        separado = i.split(" ")
+                        if "agregar" in separado:
+                            print(f"{contador}. {i}")
+                        contador+=1
+
+                    indice = int(input("Selecione la solicitud que desea revisar: "))
+                    indice = indice-1
+                    comparador = texto[indice].split(" ")
+                    if "pendiente" not in comparador:
+                        print("La solicitud ya fue contestada.")
+                    else: 
+                        respuesta = int(input("Desea 1. rechazar o 2. aceptar, indique el número de su respuesta: "))
+                        if respuesta == 1:
+                            nuevo = texto[indice].split(" ")
+                            nuevo[-1] = "rechazar"
+                            print("operación realizada con éxito")
+                            concatenar = ""
+                            for i in nuevo:
+                                if i is not nuevo[-1]:
+                                    concatenar+=i+" "
+                                else:
+                                    concatenar+=i
+                            texto[indice] = concatenar
+                        elif respuesta == 2:
+                            nuevo = texto[indice].split(" ")
+                            nuevo[-1] = "aceptar"
+                            print("operación realizada con éxito, inventario general actualizado.")
+                            concatenar = ""
+                            for i in nuevo:
+                                if i is not nuevo[-1]:
+                                    concatenar+=i+" "
+                                else:
+                                    concatenar+=i
+                            texto[indice] = concatenar
+                            
+                            # Actualizar inventario general
+                            t = open("solisdeberas.txt" , "r+")
+                            t.read()
+                            t.write("\n")
+                            inventario = texto[indice].split(" ")
+                            inventario.pop(-1)
+                            inventario.pop(-1)
+                            for i in inventario:
+                                if i == inventario[-1]:
+                                    t.write(i)
+                                else: 
+                                    t.write(f"{i} ")
+                        else: 
+                            print("índice no válido")
+                        j = open("solis.txt", "w")
                         for i in texto:
                             if i is not texto[-1]:
                                 j.write(f"{i}\n")
                             else:
                                 j.write(f"{i}")
-                        j.close()
-                    elif respuesta == 2:
-                        nuevo = texto[indice].split(" ")
-                        nuevo[-1] = "aceptar"
-                        print("operación realizada con éxito, inventario general actualizado.")
-                        concatenar = ""
-                        for i in nuevo:
-                            if i is not nuevo[-1]:
-                                concatenar+=i+" "
-                            else:
-                                concatenar+=i
-                        texto[indice] = concatenar
-                        j = open("Practica1/archivosOp/solicitudes.txt", "w")
-                        print(texto)
-                        for i in texto:
-                            if i is not texto[-1]:
-                                j.write(f"{i}\n")
-                            else:
-                                j.write(f"{i}") 
-                        j.close()
+                elif indu==1:
+                    contador = 1
+                    for i in texto:
+                        separado = i.split(" ")
+                        if "eliminar" in separado:
+                            print(f"{contador}. {i}")
+                        contador+=1
                         
-                        # Actualizar inventario general
-                        t = open("Practica1/archivosSistema/inventarioInicial.txt" , "r+")
-                        t.read()
-                        t.write("\n")
-                        inventario = texto[indice].split(" ")
-                        inventario.pop(-1)
-                        inventario.pop(-1)
-                        for i in inventario:
-                            if i == inventario[-1]:
-                                t.write(i)
-                            else: 
-                                t.write(f"{i} ")
-                    else: 
-                        print("índice no válido")
+
+                else:
+                    print("Indice inválido")
 
             elif indice==7: # Salir del bucle
                 break
