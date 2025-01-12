@@ -196,7 +196,7 @@ class Sistema:
                         temp.setNext(None)
 
                     # Eliminar del inventario general ---------------------------------------------
-                    with open("Practica1/archivosSistema/inventarioInicial.txt", "r") as archivo:
+                    with open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt", "r") as archivo:
                         # Leemos el contenido y procesamos
                         texto = archivo.read().split("\n")
 
@@ -209,7 +209,7 @@ class Sistema:
                                 textoNuevo.append(i)
                                 
                     # Reescribimos 
-                    with open("Practica1/archivosSistema/inventarioInicial.txt", "w") as archivo:
+                    with open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt", "w") as archivo:
                         contador = 1
                         for i in textoNuevo:
                             if contador != len(textoNuevo):
@@ -306,7 +306,7 @@ class Sistema:
                             texto[indice] = concatenar
                             
                             # Actualizar inventario general
-                            with open("Practica1/archivosSistema/inventarioInicial.txt" , "r+") as t:
+                            with open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt" , "r+") as t:
                                 t.read()
                                 t.write("\n")
                                 inventario = texto[indice].split(" ")
@@ -362,14 +362,14 @@ class Sistema:
                             ordenador = ordenamientoDoble.OrdenadorAgenda()
                             ordenador.ordenar(self._equipos)
 
-                            buscar = open("Practica1/archivosSistema/inventarioInicial.txt", "r")
+                            buscar = open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt", "r")
                             tex = buscar.read().split("\n")
                             for i in tex:
                                 separao = i.split(" ")
                                 if int(separao[3]) == int(serie):
                                     tex.remove(i)
                             buscar.close()
-                            with open("Practica1/archivosSistema/inventarioInicial.txt", "w") as ree:
+                            with open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt", "w") as ree:
                                 for i in tex:
                                     if i == tex[-1]:
                                         ree.write(i)  
@@ -525,7 +525,29 @@ class Sistema:
                 temp = temp.getNext()
             return temp
 
-        
+    def ordenar(self,tipo):
+        if "equipos" == tipo:
+            nodo = self._equipos.first()
+            while nodo:
+                nodo2 = nodo.getNext()
+                while nodo2:
+                    if nodo.getData().getNoPlaca() > nodo2.getData().getNoPlaca():
+                        self.intercambiar(nodo,nodo2)
+                    nodo2 = nodo2.getNext()
+                nodo = nodo.getNext()
+            
+        archivo = open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt","w")
+        temporal = sistema._equipos.first()
+        while temporal != None:
+            archivo.write(f"{temporal.getData().getEmpleado().getNombre()} {temporal.getData().getEmpleado().getId()} {temporal.getData()}\n")
+            temporal = temporal.getNext()
+        archivo.close()
+            
+
+    def intercambiar(self,primero,segundo):
+        temporal = primero.getData()
+        primero.setData(segundo.getData())
+        segundo.setData(temporal)
 
         
 
@@ -568,7 +590,7 @@ if __name__ == "__main__":
 
     archivoPassword.close()
 
-    archivoEquipos = open("Practica1/archivosSistema/inventarioInicial.txt","r")
+    archivoEquipos = open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt","r")
     while True:
         equipo = archivoEquipos.readline()
         equipo = equipo.strip()
@@ -579,7 +601,7 @@ if __name__ == "__main__":
             empleado1 = sistema.busqueda(empleado,"empleado-nombre").getData()
             equipo1 = Equipo(nombre,NoPlaca,Fecha(int(dia),int(mes),int(año)),valor,empleado1)
             empleado1.agregarEquipo(equipo1)
-            sistema._equipos.addFirst(equipo1)
+            sistema._equipos.addLast(equipo1)
 
 
     archivoEquipos.close()
@@ -587,4 +609,14 @@ if __name__ == "__main__":
     cedula = int(input("Ingrese su documento: "))
     contraseña = input("Ingrese su contraseña: ")
     sistema.accesoSistema(cedula,contraseña)
+
+
+    """primero = sistema._equipos.first()
+    while primero != None:
+        print(primero.getData())
+        primero = primero.getNext()"""
+
     #pruebas
+
+
+

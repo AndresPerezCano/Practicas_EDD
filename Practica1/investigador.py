@@ -54,7 +54,7 @@ class Investigador(Usuario):
                 solicitud = solicitud.split(" ")
                 if int(solicitud[1]) == self._id:
                     if len(solicitud) == 6:
-                        historialI = open("Practica1/archivosSistema/inventarioInicial.txt","r")
+                        historialI = open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt","r")
                         while True:
                             equipo = historialI.readline()
                             equipo = equipo.strip()
@@ -91,7 +91,7 @@ class Investigador(Usuario):
                 listaSolicitud = solicitud.split(" ")
                 if int(listaSolicitud[1]) == self._id:
                     if len(listaSolicitud) == 6:
-                        historialI = open("Practica1/archivosSistema/inventarioInicial.txt","r")
+                        historialI = open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt","r")
                         while True:
                             equipo = historialI.readline()
                             equipo = equipo.strip()
