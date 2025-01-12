@@ -615,8 +615,19 @@ if __name__ == "__main__":
     while primero != None:
         print(primero.getData())
         primero = primero.getNext()"""
-
+    
     #pruebas
+    """Esto llama al ordenar"""
+     #sistema.ordenar("equipos")
 
+#esto copia todo en el archivo
+"""
+    archivo = open("Practica1/archivosSistema/.inventarioCentroDeInvestigaciontxt","w")
+    temporal = sistema._equipos.first()
+    while temporal != None:
+        archivo.write(f"{temporal.getData().getEmpleado().getNombre()} {temporal.getData().getEmpleado().getId()} {temporal.getData()}\n")
+        temporal = temporal.getNext()
+    archivo.close()
+"""
 
 
