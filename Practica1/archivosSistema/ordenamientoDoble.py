@@ -11,20 +11,20 @@ class OrdenadorAgenda:
     def agregarUsuario(self, usuario):
         self._L.agregarUltimo(usuario)
 
-    def ordenar(self):
-        nodo = self._L.primero()
+    def ordenar(self, lista):
+        nodo = lista.first()
         while nodo:
-            nodo2 = nodo.getSiguiente()
+            nodo2 = nodo.getNext()
             while nodo2:
-                if nodo.getDato().getId() > nodo2.getDato().getId():
+                if nodo.getData().getNoPlaca() > nodo2.getData().getNoPlaca():
                     self.intercambiar(nodo,nodo2)
-                nodo2 = nodo2.getSiguiente()
-            nodo = nodo.getSiguiente()
+                nodo2 = nodo2.getNext()
+            nodo = nodo.getNext()
     
     def intercambiar(self,primero,segundo):
-        temporal = primero.getDato()
-        primero.setDato(segundo.getDato())
-        segundo.setDato(temporal)
+        temporal = primero.getData()
+        primero.setData(segundo.getData())
+        segundo.setData(temporal)
         
 
     def mostrar(self):

@@ -1,4 +1,4 @@
-import os
+from archivosSistema import ordenamientoDoble
 from direccion import Direccion
 from usuario import Usuario
 from fecha import Fecha
@@ -53,13 +53,15 @@ class Sistema:
 
         while True:
             print("\nQue proceso desea realizar:")
-            print("1.Consultar mis equipos.")
+            print("1. Consultar mis equipos.")
             print("2. Registrar usuarios.")
             print("3. Eliminar usuarios.")
             print("4. cambiar contraseñas.")
-            print("5. Generar inventario en txt.")
+            print("5. Generar txt de inventario")
             print("6. Atender solicitudes.")
-            print("7. Salir.")
+            print("7. generar txt con solicitudes.")
+            print("8. generar txt de control de cambios")
+            print("9. Salir.")
             indice = int(input("Ingrese un indice: "))
 
             if indice == 1: # Consulta equipos -----------------------------------------------------------------------
@@ -265,12 +267,11 @@ class Sistema:
                 texto = control.read().split("\n")
                 indu = int(input("¿Qué categoría desea ver? (1. eliminar 2. agregar) equipos: "))
 
-                if indu==2:
-
+                if indu==2: # Agregar equipo ---------------------------------------------------------
                     contador = 1
                     for i in texto:
                         separado = i.split(" ")
-                        if "agregar" in separado:
+                        if "agregar" in separado and "pendiente" in separado:
                             print(f"{contador}. {i}")
                         contador+=1
 
@@ -281,7 +282,7 @@ class Sistema:
                         print("La solicitud ya fue contestada.")
                     else: 
                         respuesta = int(input("Desea 1. rechazar o 2. aceptar, indique el número de su respuesta: "))
-                        if respuesta == 1:
+                        if respuesta == 1: 
                             nuevo = texto[indice].split(" ")
                             nuevo[-1] = "rechazar"
                             print("operación realizada con éxito")
@@ -311,11 +312,14 @@ class Sistema:
                                 inventario = texto[indice].split(" ")
                                 inventario.pop(-1)
                                 inventario.pop(-1)
+
                                 for i in inventario:
                                     if i == inventario[-1]:
                                         t.write(i)
                                     else: 
                                         t.write(f"{i} ")
+
+                                # Recojemos la lista
                         else: 
                             print("índice no válido")
                         with open("Practica1/archivosSistema/solicitudes.txt", "w") as j:
@@ -324,60 +328,121 @@ class Sistema:
                                     j.write(f"{i}\n")
                                 else:
                                     j.write(f"{i}")
-                elif indu==1:
+
+                elif indu==1: # Eliminar equipo --------------------------------------------
                     contador = 1
                     for i in texto:
                         separado = i.split(" ")
-                        if "eliminar" in separado:
+                        if "eliminar" in separado and "pendiente" in separado:
                             print(f"{contador}. {i}")
                         contador+=1
 
                     soli = int(input("Seleccione la solicitud que desea atender: "))
                     soli-=1
                     serieEquipo = texto[soli].split(" ")
-                    if "pendiente" not in serieEquipo:
-                        print("La solicitud ya fue contestada.")
-                        pass
+
+                    deseo = int(input("Desea (1. aceptar o 2. rechazar la solicitud): "))
                     serie = int(serieEquipo[2])
 
-                    # recorrer lista equipos 
-                    print(serie)
-                    temp = self._equipos.first()
-                    while True:
-                        if int(temp.getData().getNoPlaca()) == int(serie):
-                            break
-                        elif temp == None:
-                            break
-                        temp = temp.getNext()
+                    if deseo == 1: # Acpetar eliminar -----------------------------------------
+                        serie = int(serieEquipo[2])
+                        # recorrer lista equipos 
+                        print(serie)
+                        temp = self._equipos.first()
+                        while True:
+                            if int(temp.getData().getNoPlaca()) == int(serie):
+                                break
+                            elif temp == None:
+                                break
+                            temp = temp.getNext()
 
+                        if temp!=None:
+                            self._equipos.remove(temp.getData())
+                            # Ordenamos una vez se elimina ----------------------------------------------
+                            ordenador = ordenamientoDoble.OrdenadorAgenda()
+                            ordenador.ordenar(self._equipos)
 
-                    if temp!=None:
-                        self._equipos.remove(temp.getData())
-
-                        buscar = open("Practica1/archivosSistema/inventarioInicial.txt", "r")
-                        tex = buscar.read().split("\n")
-                        for i in tex:
-                            separao = i.split(" ")
-                            if int(separao[3]) == int(serie):
-                                tex.remove(i)
-                        buscar.close()
-                        with open("Practica1/archivosSistema/inventarioInicial.txt", "w") as ree:
+                            buscar = open("Practica1/archivosSistema/inventarioInicial.txt", "r")
+                            tex = buscar.read().split("\n")
                             for i in tex:
-                                if i == tex[-1]:
-                                    ree.write(i)  
-                                else:
-                                    ree.write(i+"\n")
+                                separao = i.split(" ")
+                                if int(separao[3]) == int(serie):
+                                    tex.remove(i)
+                            buscar.close()
+                            with open("Practica1/archivosSistema/inventarioInicial.txt", "w") as ree:
+                                for i in tex:
+                                    if i == tex[-1]:
+                                        ree.write(i)  
+                                    else:
+                                        ree.write(i+"\n")
 
-                        print("Se ha eliminado correctamente")
+                            print("Se ha eliminado correctamente")
+                            comprobante = False
+                            for i in texto:
+                                temp = i.split(" ")
+                                if "eliminar" in temp:
+                                    if int(temp[2]) == serie:
+                                        posicion = texto.index(i)
+                                        temp.remove("pendiente")
+                                        temp.append("aceptar")
 
+                                        concatenar = ""
+                                        for e in temp:
+                                            if e is temp[-1]:
+                                                concatenar+=e
+                                            else:
+                                                concatenar+=e+" "
+                                        comprobante = True 
+                                        texto[posicion] = concatenar
+                            if comprobante:# Actualizar lista solis
+                                print("Se ha actualizado la lista de solicitudes")
+                                with open("Practica1/archivosSistema/solicitudes.txt","w")as h:
+                                    for i in texto:
+                                        if i is not texto[-1]:
+                                            h.write(i+"\n")
+                                        else:
+                                            h.write(i)
+                        else: 
+                            print("No fue posible eliminar el equipo")
 
-                        
-                    else: 
-                        print("No fue posible eliminar el equipo")
+                    else: # Rechazar eliminar -------------------------------------------------
+                        comprobante = False
+                        for i in texto:
+                            temp = i.split(" ")
+                            if "eliminar" in temp:
+                                if int(temp[2]) == serie:
+                                    posicion = texto.index(i)
+                                    temp.remove("pendiente")
+                                    temp.append("rechazar")
+
+                                    concatenar = ""
+                                    for e in temp:
+                                        if e is temp[-1]:
+                                            concatenar+=e
+                                        else:
+                                            concatenar+=e+" "
+                                    comprobante = True 
+                                    texto[posicion] = concatenar
+                        if comprobante:# Actualizar lista solis
+                            print("Se ha actualizado la lista de solicitudes")
+                            with open("Practica1/archivosSistema/solicitudes.txt","w")as h:
+                                for i in texto:
+                                    if i is not texto[-1]:
+                                        h.write(i+"\n")
+                                    else:
+                                        h.write(i)
+                        else:
+                            print("No fue posible encontrar esa solicitud, quizá ya fue contestada") 
                 else:
                     print("Indice inválido")
 
-            elif indice==7: # Salir del bucle
+            elif indice == 7: # generar txt solicitudes pendientes -----------------------------------------
+                opcion = int(input("Desea ver solicitudes pendientes (1. agregar o 2. eliminar)?: "))
+                empleado.generarDocSolicitudes(opcion)
+            elif indice == 8: # generar txt gestion de cambios -------------------------------------------
+                print("Se he generado correctamente un doc con la gestion de los cambios")
+                empleado.generarGestorCambios()
+            elif indice==9: # Salir del bucle
                 break
             else: 
                 print("Indice no válido")
@@ -522,9 +587,4 @@ if __name__ == "__main__":
     cedula = int(input("Ingrese su documento: "))
     contraseña = input("Ingrese su contraseña: ")
     sistema.accesoSistema(cedula,contraseña)
-
     #pruebas
-
-
-
-    
