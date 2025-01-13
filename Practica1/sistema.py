@@ -320,30 +320,6 @@ class Sistema:
                                         t.write(f"{i} ")
 
                                 # Recojemos la lista
-                                archivoEquipos = open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt","r")
-                                while True:
-                                    equipo = archivoEquipos.readline()
-                                    equipo = equipo.strip()
-                                    if not equipo:
-                                        break
-                                    else:
-                                        empleado,cedula,nombre,NoPlaca,dia,mes,año,valor = equipo.split(" ")
-                                        empleado1 = self.busqueda(empleado,"empleado-nombre").getData()
-                                        equipo1 = Equipo(nombre,NoPlaca,Fecha(int(dia),int(mes),int(año)),valor,empleado1)
-                                        empleado1.agregarEquipo(equipo1)
-                                        self._equipos.addLast(equipo1)
-                                archivoEquipos.close()
-                                self.ordenar("equipos")
-
-                                with open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt", "w") as reescribir:
-                                    temp = self._equipos.first()
-                                    for i in range(0, self._equipos.size()):
-                                        if i == (self._equipos.size()-1):
-                                            reescribir.write(f'{temp.getData().getEmpleado().getNombre()} {temp.getData().getEmpleado().getId()} {temp.getData().__str__()}')
-                                        else:
-                                            reescribir.write(f'{temp.getData().getEmpleado().getNombre()} {temp.getData().getEmpleado().getId()} {temp.getData().__str__()}\n')                 
-                                        temp = temp.getNext()
-
                         else: 
                             print("índice no válido")
                         with open("Practica1/archivosSistema/solicitudes.txt", "w") as j:
