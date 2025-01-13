@@ -306,18 +306,10 @@ class Sistema:
                             texto[indice] = concatenar
                             
                             # Actualizar inventario general
-                            with open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt" , "r+") as t:
-                                t.read()
-                                t.write("\n")
-                                inventario = texto[indice].split(" ")
-                                inventario.pop(-1)
-                                inventario.pop(-1)
-
-                                for i in inventario:
-                                    if i == inventario[-1]:
-                                        t.write(i)
-                                    else: 
-                                        t.write(f"{i} ")
+                            idEmpleado,nombre,codigo,dia,mes,año,valor = nuevo[1:8]
+                            empleado12 = self.busqueda(idEmpleado,"empleado-ID")
+                            self._equipos.addFirst(Equipo(nombre,codigo,Fecha(int(dia),int(mes),int(año)),valor,empleado12.getData()))
+                            self.ordenar("equipos")
 
                                 # Recojemos la lista
                         else: 
@@ -521,7 +513,7 @@ class Sistema:
             return temp
         
         elif tipo == "empleado-ID":
-            while(temp != None and temp.getData().getId() != dato):
+            while(temp != None and int(temp.getData().getId()) != int(dato)):
                 temp = temp.getNext()
             return temp
 
@@ -581,11 +573,11 @@ if __name__ == "__main__":
                     if id == cedulaP:
                         if descripcion1 == "administrador":
                             usuario1 = Administrador(nombre,id,Fecha(int(dia),int(mes),int(año)),ciudad_nacimiento,tel,email,Direccion(calle,ciudad,nomenclatura,barrio,edificio,apto))
-                            sistema._empleados.addFirst(usuario1)
+                            sistema._empleados.addLast(usuario1)
                         
                         elif descripcion1 == "investigador":
                             usuario1 = Investigador(nombre,id,Fecha(int(dia),int(mes),int(año)),ciudad_nacimiento,tel,email,Direccion(calle,ciudad,nomenclatura,barrio,edificio,apto))
-                            sistema._empleados.addFirst(usuario1)
+                            sistema._empleados.addLast(usuario1)
                 
 
     archivoPassword.close()
@@ -605,6 +597,11 @@ if __name__ == "__main__":
 
 
     archivoEquipos.close()
+
+    """empleado127217 = sistema._empleados.first()
+    while empleado127217 != None:
+        print(empleado127217.getData())
+        empleado127217 = empleado127217.getNext()"""
 
     cedula = int(input("Ingrese su documento: "))
     contraseña = input("Ingrese su contraseña: ")

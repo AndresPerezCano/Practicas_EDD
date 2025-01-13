@@ -41,15 +41,20 @@ class ListaSimple:
             self._size += 1 
 
     def addLast(self, objeto):
-        temp = self._head
-        condicion = temp.getNext()
-        while condicion != None:
-            temp = temp.getNext()
+        if self._size == 0:
+            self._head = NodoSimple(objeto)
+            self._tail = self._head
+            self._size += 1
+        else:
+            temp = self._head
             condicion = temp.getNext()
-        nodo = NodoSimple(objeto)
-        temp.setNext(nodo)
-        self._tail = nodo
-        self._size += 1
+            while condicion != None:
+                temp = temp.getNext()
+                condicion = temp.getNext()
+            nodo = NodoSimple(objeto)
+            temp.setNext(nodo)
+            self._tail = nodo
+            self._size += 1
     
     def removeFirst(self):
         if self._size == 1 or self._size ==0:
