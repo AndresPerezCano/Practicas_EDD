@@ -57,10 +57,23 @@ class Administrador(Usuario):
                         textoNuevo.append(concatenar)
                 with open("Practica1/archivos/Solicitudes_eliminar.txt", "w") as j:
                     for i in textoNuevo:
-                        if i is textoNuevo[-1]:
-                            j.write(i)
-                        else:
-                            j.write(f"{i}\n")
+                            linea = i.split(" ")
+                            stringEmpleado = " ".join(linea[:2])
+                            stringfinal = " ".join(linea[4:])
+                            historialI = open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt","r")
+                            stringEquipo = ""
+                            while True:
+                                equipo = historialI.readline()
+                                equipo = equipo.strip()
+                                if not equipo:
+                                    historialI.close()
+                                    break
+                                else:
+                                    codigo = equipo.split(" ")[3]
+                                    if int(codigo) == int(linea[2]):
+                                        stringEquipo = " ".join(equipo.split(" ")[2:])
+                            j.write(f"{stringEmpleado} {stringEquipo} {stringfinal}\n")
+                            
                 print("Proceso realizado con éxito")
             elif conditional == 1: # Solis agregar-------------------------
                 for i in texto:

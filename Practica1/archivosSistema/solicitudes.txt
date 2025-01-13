@@ -14,3 +14,5 @@ Andr�s-P�rez 1035973301 CAMARA_MULTISPECTRAL 50109670 09 12 2020 45678900 ag
 Andr�s-P�rez 1035973301 50109672 no_se eliminar aceptar
 Andr�s-P�rez 1035973301 nintendo 17223 92 82 8266 2736547623 agregar rechazar
 Andr�s-P�rez 1035973301 50109670 szs eliminar pendiente
+Andr�s-P�rez 1035973301 50661222 sxs eliminar pendiente
+Andr�s-P�rez 1035973301 50109671 ssd eliminar pendiente
