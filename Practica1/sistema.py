@@ -1,3 +1,4 @@
+import datetime
 from direccion import Direccion
 from usuario import Usuario
 from fecha import Fecha
@@ -293,6 +294,8 @@ class Sistema:
                                     concatenar+=i+" "
                                 else:
                                     concatenar+=i
+                            hora = datetime.datetime.now()
+                            concatenar+=f" {hora.hour} {hora.minute} {hora.second}"
                             texto[indice] = concatenar
                             
                             # Actualizar inventario general
@@ -372,7 +375,9 @@ class Sistema:
                                                 concatenar+=e
                                             else:
                                                 concatenar+=e+" "
-                                        comprobante = True 
+                                        comprobante = True
+                                        hora = datetime.datetime.now()
+                                        concatenar+=f" {hora.hour} {hora.minute} {hora.second}" 
                                         texto[posicion] = concatenar
                             if comprobante:# Actualizar lista solis
                                 print("Se ha actualizado la lista de solicitudes")
