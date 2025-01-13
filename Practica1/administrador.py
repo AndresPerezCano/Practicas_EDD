@@ -105,7 +105,7 @@ class Administrador(Usuario):
                     archiv.write(i+"\n")
     
     def generarInventario(self):
-        with open("Practica1/archivosSistema/solicitudes.txt", "r") as archimonde:
+        with open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt", "r") as archimonde:
             texto = archimonde.read().split("\n")
 
             with open("Practica1/archivosOp/Inventario general.txt", "w") as archiv:
