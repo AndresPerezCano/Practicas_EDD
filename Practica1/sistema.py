@@ -1,4 +1,3 @@
-from archivosSistema import ordenamientoDoble
 from direccion import Direccion
 from usuario import Usuario
 from fecha import Fecha
@@ -16,10 +15,8 @@ class Sistema:
         self._empleados = ListaSimple()
         self._equipos = ListaDoble()
 
-   # def agregarUsuario()
-
     def accesoSistema(self, cedula, contraseña):
-        archivoPassword = open("Practica1/archivos/Password.txt","r")
+        archivoPassword = open("Practica1/archivosSistema/Password.txt","r")
         while True:
             password = archivoPassword.readline()
             password = password.strip()
@@ -96,32 +93,36 @@ class Sistema:
                 if rol == "administrador" or "Administrador":
                     usuNuevo = Administrador(nombre, int(cedu), fecha,ciudad_na, int(tel), email, dir)
 
-                    contras = open("Practica1/archivos/password.txt", "r+")
+                    contras = open("Practica1/archivosSistema/password.txt", "r+")
                     contras.read()
                     contras.write(f"\n{cedu} {contrasenia} {rol}")
                     contras.close()
 
-                    docuUsuarios = open("Practica1/archivos/empleados.txt", "r+")
+                    docuUsuarios = open("Practica1/archivosSistema/Empleados.txt", "r+")
                     docuUsuarios.read()
                     docuUsuarios.write("\n")
                     texto = usuNuevo.__str__()
                     docuUsuarios.write(texto)
                     docuUsuarios.close()
+                    self._empleados.addLast(usuNuevo)
+                    self.ordenar("empleados")
 
                 elif rol == "investigador" or "Investigador":
                     usuNuevo = Investigador(nombre, int(cedu), fecha,ciudad_na, int(tel), email, dir)
 
-                    contras = open("Practica1/archivos/password.txt", "r+")
+                    contras = open("Practica1/archivosSistema/password.txt", "r+")
                     contras.read()
                     contras.write(f"\n{cedu} {contrasenia} {rol}")
                     contras.close()
 
-                    docuUsuarios = open("Practica1/archivos/empleados.txt", "r+")
+                    docuUsuarios = open("Practica1/archivosSistema/empleados.txt", "r+")
                     docuUsuarios.read()
                     docuUsuarios.write("\n")
                     texto = usuNuevo.__str__()
                     docuUsuarios.write(texto)
                     docuUsuarios.close()
+                    self._empleados.addLast(usuNuevo)
+                    self.ordenar("empleados")
 
                 else:
                     print("Error en la elección del rol del usuario")
@@ -135,7 +136,7 @@ class Sistema:
                     print(usuEliminar)
 
                     # Eliminar contraseña ---------------------------------------------
-                    with open("Practica1/archivos/Password.txt", "r") as archivo:
+                    with open("Practica1/archivosSistema/Password.txt", "r") as archivo:
                         # Leemos el contenido y procesamos
                         texto = archivo.read().replace("\n", " ")
                         texto2 = texto.split(" ")
@@ -151,7 +152,7 @@ class Sistema:
                         texto2.pop(indice + 1)  # Contraseña
                         texto2.pop(indice)      # Cedula
                     # Reescribimos el documento contraseña ---------------------------
-                    with open("Practica1/archivos/Password.txt", "w") as archivo:
+                    with open("Practica1/archivosSistema/Password.txt", "w") as archivo:
                         contador = 0
                         for i in texto2:
                             contador += 1
@@ -166,7 +167,7 @@ class Sistema:
                                     contador = 0
 
                     # Eliminamos su registro en la lista de empleados -----------------
-                    with open("Practica1/archivos/Empleados.txt", "r") as archivo:
+                    with open("Practica1/archivosSistema/Empleados.txt", "r") as archivo:
                         # Leemos el contenido y procesamos
                         texto = archivo.read().split("\n")
 
@@ -176,7 +177,7 @@ class Sistema:
                         print("Se ha eliminado correctamente")
                         texto.remove(Usuario)
 
-                    with open("Practica1/archivos/Empleados.txt", "w") as archivo:
+                    with open("Practica1/archivosSistema/Empleados.txt", "w") as archivo:
                         for i in texto:
                             if i is not texto[-1]:
                                 archivo.write(i + "\n")
@@ -227,7 +228,7 @@ class Sistema:
                 print("Ingrese la cédula del usuario al que le va a cambiar la contraseña: ")
                 ceduCambio = input()
 
-                with open("Practica1/archivos/Password.txt", "r") as archivo:
+                with open("Practica1/archivosSistema/Password.txt", "r") as archivo:
                     # Leemos el contenido y procesamos
                     texto = archivo.read().split("\n")
                     
@@ -242,7 +243,7 @@ class Sistema:
                             indiceText = texto.index(i)
                             texto[indiceText] = f"{ceduCambio} {nuevaContra} {rol}"
                 # Reescribimos 
-                with open("Practica1/archivos/Password.txt", "w") as archivo:
+                with open("Practica1/archivosSistema/Password.txt", "w") as archivo:
                     contador = 1
                     for i in texto:
                         if contador != len(texto):
@@ -532,12 +533,30 @@ class Sistema:
                     nodo2 = nodo2.getNext()
                 nodo = nodo.getNext()
             
-        archivo = open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt","w")
-        temporal = sistema._equipos.first()
-        while temporal != None:
-            archivo.write(f"{temporal.getData().getEmpleado().getNombre()} {temporal.getData().getEmpleado().getId()} {temporal.getData()}\n")
-            temporal = temporal.getNext()
-        archivo.close()
+            archivo = open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt","w")
+            temporal = sistema._equipos.first()
+            while temporal != None:
+                archivo.write(f"{temporal.getData().getEmpleado().getNombre()} {temporal.getData().getEmpleado().getId()} {temporal.getData()}\n")
+                temporal = temporal.getNext()
+            archivo.close()
+        
+        elif "empleados" == tipo:
+            nodo = self._empleados.first()
+            while nodo:
+                nodo2 = nodo.getNext()
+                while nodo2:
+                    if nodo.getData().getId() > nodo2.getData().getId():
+                        self.intercambiar(nodo,nodo2)
+                    nodo2 = nodo2.getNext()
+                nodo = nodo.getNext()
+            
+            archivo = open("Practica1/archivosSistema/empleados.txt","w")
+            temporal = sistema._empleados.first()
+            while temporal != None:
+                archivo.write(f"{temporal.getData()}\n")
+                temporal = temporal.getNext()
+            archivo.close()
+            
             
 
     def intercambiar(self,primero,segundo):
@@ -554,7 +573,7 @@ if __name__ == "__main__":
 
     sistema = Sistema()
 
-    archivoEmpleados = open("Practica1/archivos/Empleados.txt","r")
+    archivoEmpleados = open("Practica1/archivosSistema/Empleados.txt","r")
     while True:
         usuario = archivoEmpleados.readline()
         usuario = usuario.strip()
@@ -565,12 +584,13 @@ if __name__ == "__main__":
             dia, mes, año = fecha_nacimiento.split("-")
             ciudad,calle,nomenclatura,barrio,edificio,apto = dir.split(" ")  
             
-            archivoPassword = open("Practica1/archivos/Password.txt","r")
+            archivoPassword = open("Practica1/archivosSistema/Password.txt","r")
             
             while True:
                 descripcion = archivoPassword.readline()
                 descripcion = descripcion.strip()
                 if not descripcion:
+                    archivoPassword.close()
                     break
                 else:
                     cedulaP,contraseñaP,descripcion1 = descripcion.split(" ")
@@ -584,7 +604,6 @@ if __name__ == "__main__":
                             sistema._empleados.addLast(usuario1)
                 
 
-    archivoPassword.close()
 
     archivoEquipos = open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt","r")
     while True:
@@ -602,33 +621,10 @@ if __name__ == "__main__":
 
     archivoEquipos.close()
 
-    """empleado127217 = sistema._empleados.first()
-    while empleado127217 != None:
-        print(empleado127217.getData())
-        empleado127217 = empleado127217.getNext()"""
 
     cedula = int(input("Ingrese su documento: "))
     contraseña = input("Ingrese su contraseña: ")
     sistema.accesoSistema(cedula,contraseña)
 
-
-    """primero = sistema._equipos.first()
-    while primero != None:
-        print(primero.getData())
-        primero = primero.getNext()"""
-    
-    #pruebas
-    """Esto llama al ordenar"""
-     #sistema.ordenar("equipos")
-
-#esto copia todo en el archivo
-"""
-    archivo = open("Practica1/archivosSistema/.inventarioCentroDeInvestigaciontxt","w")
-    temporal = sistema._equipos.first()
-    while temporal != None:
-        archivo.write(f"{temporal.getData().getEmpleado().getNombre()} {temporal.getData().getEmpleado().getId()} {temporal.getData()}\n")
-        temporal = temporal.getNext()
-    archivo.close()
-"""
 
 

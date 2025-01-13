@@ -55,7 +55,7 @@ class Administrador(Usuario):
                             else:
                                 concatenar+=e+" "
                         textoNuevo.append(concatenar)
-                with open("Practica1/archivos/solicitudes eliminar.txt", "w") as j:
+                with open("Practica1/archivos/Solicitudes_eliminar.txt", "w") as j:
                     for i in textoNuevo:
                         if i is textoNuevo[-1]:
                             j.write(i)
@@ -74,7 +74,7 @@ class Administrador(Usuario):
                             else:
                                 concatenar+=e+" "
                         textoNuevo.append(concatenar)
-                with open("Practica1/archivosSistema/solicitudes agregar.txt", "w") as j:
+                with open("Practica1/archivos/Solicitudes_agregar.txt", "w") as j:
                     for i in textoNuevo:
                         if i is textoNuevo[-1]:
                             j.write(i)
@@ -96,7 +96,7 @@ class Administrador(Usuario):
                 nuevaLista.append(i)
         archivo.close()
 
-        with open("Practica1/archivosOp/Gestor_cambios.txt", "w") as archiv:
+        with open("Practica1/archivos/Control_de_cambios.txt", "w") as archiv:
             # Escribir en el gestor de cambios
             for i in nuevaLista:
                 if i == nuevaLista[-1]:
@@ -108,7 +108,7 @@ class Administrador(Usuario):
         with open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt", "r") as archimonde:
             texto = archimonde.read().split("\n")
 
-            with open("Practica1/archivosOp/Inventario general.txt", "w") as archiv:
+            with open("Practica1/archivosOp/InventarioGeneral.txt", "w") as archiv:
             # Escribir en el gestor de cambios
                 for i in texto:
                     if i == texto[-1]:
