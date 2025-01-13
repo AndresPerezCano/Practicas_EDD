@@ -108,7 +108,7 @@ class Administrador(Usuario):
         with open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt", "r") as archimonde:
             texto = archimonde.read().split("\n")
 
-            with open("Practica1/archivosOp/InventarioGeneral.txt", "w") as archiv:
+            with open("Practica1/archivos/InventarioGeneral.txt", "w") as archiv:
             # Escribir en el gestor de cambios
                 for i in texto:
                     if i == texto[-1]:

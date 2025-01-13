@@ -54,7 +54,7 @@ class Sistema:
             print("2. Registrar usuarios.")
             print("3. Eliminar usuarios.")
             print("4. cambiar contraseñas.")
-            print("5. Generar txt de inventario")
+            print("5. Generar txt de inventario de empleado")
             print("6. Atender solicitudes.")
             print("7. generar txt con solicitudes.")
             print("8. generar txt de control de cambios")
@@ -98,12 +98,6 @@ class Sistema:
                     contras.write(f"\n{cedu} {contrasenia} {rol}")
                     contras.close()
 
-                    docuUsuarios = open("Practica1/archivosSistema/Empleados.txt", "r+")
-                    docuUsuarios.read()
-                    docuUsuarios.write("\n")
-                    texto = usuNuevo.__str__()
-                    docuUsuarios.write(texto)
-                    docuUsuarios.close()
                     self._empleados.addLast(usuNuevo)
                     self.ordenar("empleados")
 
@@ -115,12 +109,6 @@ class Sistema:
                     contras.write(f"\n{cedu} {contrasenia} {rol}")
                     contras.close()
 
-                    docuUsuarios = open("Practica1/archivosSistema/empleados.txt", "r+")
-                    docuUsuarios.read()
-                    docuUsuarios.write("\n")
-                    texto = usuNuevo.__str__()
-                    docuUsuarios.write(texto)
-                    docuUsuarios.close()
                     self._empleados.addLast(usuNuevo)
                     self.ordenar("empleados")
 
@@ -353,8 +341,6 @@ class Sistema:
                         if temp!=None:
                             self._equipos.remove(temp.getData())
                             # Ordenamos una vez se elimina ----------------------------------------------
-                            ordenador = ordenamientoDoble.OrdenadorAgenda()
-                            ordenador.ordenar(self._equipos)
 
                             buscar = open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt", "r")
                             tex = buscar.read().split("\n")
