@@ -295,7 +295,7 @@ class Sistema:
                                 else:
                                     concatenar+=i
                             hora = datetime.datetime.now()
-                            concatenar+=f" {hora.hour} {hora.minute} {hora.second}"
+                            concatenar+=f"  {hora.day} {hora.month} {hora.year} {hora.hour} {hora.minute} {hora.second}"
                             texto[indice] = concatenar
                             
                             # Actualizar inventario general
@@ -377,7 +377,7 @@ class Sistema:
                                                 concatenar+=e+" "
                                         comprobante = True
                                         hora = datetime.datetime.now()
-                                        concatenar+=f" {hora.hour} {hora.minute} {hora.second}" 
+                                        concatenar+=f" {hora.day} {hora.month} {hora.year} {hora.hour} {hora.minute} {hora.second}" 
                                         texto[posicion] = concatenar
                             if comprobante:# Actualizar lista solis
                                 print("Se ha actualizado la lista de solicitudes")
