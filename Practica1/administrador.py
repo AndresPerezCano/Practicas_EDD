@@ -128,7 +128,6 @@ class Administrador(Usuario):
                         concatenar+=f"{j}"
                 nuevaLista[indi] = concatenar
 
-
         with open("Practica1/archivos/Control_de_cambios.txt", "w") as archiv:
             # Escribir en el gestor de cambios
             for i in nuevaLista:
@@ -148,3 +147,53 @@ class Administrador(Usuario):
                         archiv.write(i)
                     else:
                         archiv.write(i+"\n")
+
+    def consultarGestorCambios(self):
+        # Generar archivo gestion cambios 
+        archivo = open("Practica1/archivosSistema/solicitudes.txt", "r")
+        texto = archivo.read().split("\n")
+
+        # Discriminar por aceptar
+        nuevaLista = []
+        for i in texto:
+            temp = i.split(" ")
+            if "aceptar" in temp:
+                nuevaLista.append(i)
+        archivo.close()
+
+        # Formato para gestor cambio -------------------------
+        for e in nuevaLista:
+            temp = e.split(" ")
+            indi = nuevaLista.index(e)
+            if len(temp)>13:
+                temp.pop(0)
+                temp.pop(1)
+                temp.pop(2)
+                temp.pop(2)
+                temp.pop(2)
+                temp.pop(2)
+                temp.pop(3)
+                concatenar = ""
+                for j in temp:
+                    if j is not temp[-1]:
+                        concatenar+=f"{j} "
+                    else:
+                        concatenar+=f"{j}"
+                nuevaLista[indi] = concatenar
+            else:
+                temp.pop(0)
+                temp.pop(2)
+                temp.pop(3)
+                concatenar = ""
+                for j in temp:
+                    if j is not temp[-1]:
+                        concatenar+=f"{j} "
+                    else:
+                        concatenar+=f"{j}"
+                nuevaLista[indi] = concatenar
+
+        # imprimir por pantallla 
+        print("\n________________________________________________________________________________________________________________________\n")
+        for i in nuevaLista:
+            print(i)
+        print("________________________________________________________________________________________________________________________")

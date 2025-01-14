@@ -60,7 +60,8 @@ class Sistema:
             print("7. generar txt con solicitudes.")
             print("8. generar txt de control de cambios")
             print("9. generar txt con inventario general.")
-            print("10. Salir.")
+            print("10. consultar gestor de cambios.")
+            print("11. Salir.")
             indice = int(input("Ingrese un indice: "))
 
             if indice == 1: # Consulta equipos -----------------------------------------------------------------------
@@ -430,7 +431,9 @@ class Sistema:
             elif indice==9: # Generar txt gestor de cambios
                 print("Se ha generado correctamente un doc con el inventario general")
                 empleado.generarInventario()
-            elif indice==10: # Salir del bucle
+            elif indice==10:
+                empleado.consultarGestorCambios()
+            elif indice==11: # Salir del bucle
                 break
             else: 
                 print("Indice no válido")
