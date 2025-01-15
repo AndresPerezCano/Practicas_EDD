@@ -666,7 +666,7 @@ if __name__ == "__main__":
 
     archivo1000 = open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt","w")
     temp = sistema.getEquipos().first()
-    while True:
+    while temp != None:
         archivo1000.write(f"{temp.getData().getEmpleado().getNombre()} {temp.getData().getEmpleado().getId()} {temp.getData()}")
         temp = temp.getNext()
 

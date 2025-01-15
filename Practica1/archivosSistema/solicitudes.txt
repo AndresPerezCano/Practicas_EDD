@@ -12,4 +12,5 @@ Andr�s-P�rez 1035973301 50109671 asjdhjasd eliminar aceptar 15 1 2025 14 48 
 Andr�s-P�rez 1035973301 50109672 afaf eliminar aceptar 15 1 2025 15 18 26
 Andr�s-P�rez 1035973301 CAMARA_MULTISPECTRAL 50109672 09 12 2020 45678900 agregar aceptar 15 1 2025 15 41 22
 Andr�s-P�rez 1035973301 50109672 dasdjhbd eliminar pendiente
-Andr�s-P�rez 1035973301 CAMARA_MULTISPECTRAL 50109650 09 12 2020 45678900 agregar aceptar 15 1 2025 15 54 16Andr�s-P�rez 1035973301 50109650 ajdsjah eliminar pendiente
+Andr�s-P�rez 1035973301 CAMARA_MULTISPECTRAL 50109650 09 12 2020 45678900 agregar aceptar 15 1 2025 15 54 16
+Andr�s-P�rez 1035973301 50109650 ajdsjah eliminar pendiente
