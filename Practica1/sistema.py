@@ -51,28 +51,65 @@ class Sistema:
 
         while True:
             print("\nQue proceso desea realizar:")
+            print("Mis procesos:\n")
             print("1. Consultar mis equipos.")
-            print("2. Registrar usuarios.")
-            print("3. Eliminar usuarios.")
-            print("4. cambiar contraseñas.")
-            print("5. Generar txt de inventario de empleado")
-            print("6. Atender solicitudes.")
-            print("7. generar txt con solicitudes.")
-            print("8. generar txt de control de cambios")
-            print("9. generar txt con inventario general.")
-            print("10. consultar gestor de cambios.")
-            print("11. Salir.")
+            print("2.Adicionar equipo.")
+            print("3.Eliminar equipo.")
+            print("4.Consulta estado solicitudes.")
+            print("5.Generar archivo solicitudes.\n")
+            print("Procesos generales:\n")
+            print("6. Registrar usuarios.")
+            print("7. Eliminar usuarios.")
+            print("8. cambiar contraseñas.")
+            print("9. Generar txt de inventario de empleado")
+            print("10. Atender solicitudes.")
+            print("11. generar txt con solicitudes.")
+            print("12. generar txt de control de cambios")
+            print("13. generar txt con inventario general.")
+            print("14. consultar gestor de cambios.")
+            print("15. Salir.")
             indice = int(input("Ingrese un indice: "))
 
-            if indice == 1: # Consulta equipos -----------------------------------------------------------------------
-                empleado.consultaEquipos()
-                indice12 = input("Desea realizar otra accion si/no:")
+            if indice == 1:
+                empleado.getData().consultaEquipos()
+                indice12 = input("Desea realizar otra accion si/no: ")
+                if indice12 == "si":
+                    pass
+                elif indice12 == "no":
+                    break
+            elif indice == 2:
+                empleado.getData().adicionarEquipo()
+                indice12 = input("Desea realizar otra accion si/no: ")
+                if indice12 == "si":
+                    pass
+                elif indice12 == "no":
+                    break
+
+            elif indice == 3:
+                empleado.getData().eliminarEquipo()
+                indice12 = input("Desea realizar otra accion si/no: ")
+                if indice12 == "si":
+                    pass
+                elif indice12 == "no":
+                    break
+
+            elif indice == 4: 
+                empleado.getData().consultaEstadoSolicitudes()
+                indice12 = input("Desea realizar otra accion si/no: ")
+                if indice12 == "si":
+                    pass
+                elif indice12 == "no":
+                    break
+
+            elif indice == 5:
+                empleado.getData().archivoSolicitudes()
+                indice12 = input("Desea realizar otra accion si/no: ")
                 if indice12 == "si":
                     pass
                 elif indice12 == "no":
                     break
             
-            elif indice == 2: # Registro usuario -------------------------------------------------------------------
+            elif indice == 6: # Registro usuario -------------------------------------------------------------------
                 print("Ingrese los datos para registrar al nuevo usuario: ")
                 # Pedimos todos los datos necesarios -----------------------------------
                 rol =  input("Rol del nuevo usuario: (investigador o administrador): ")
@@ -118,7 +155,7 @@ class Sistema:
                     print("Error en la elección del rol del usuario")
                     pass
 
-            elif indice == 3: # Eliminación usuario ------------------------------------------------
+            elif indice == 7: # Eliminación usuario ------------------------------------------------
                 cedu = int(input("ingrese el documento del usuario que quiera eliminar: "))
                 busqueda = self.busqueda(cedu, "empleado-ID")
                 if busqueda is not None:
@@ -213,7 +250,7 @@ class Sistema:
                 else:
                     print("No se encontró el usuario a eliminar")
 
-            elif indice == 4:
+            elif indice == 8:
                 # Cambiar contraseña ---------------------------------------------
                 print("Ingrese la cédula del usuario al que le va a cambiar la contraseña: ")
                 ceduCambio = input()
@@ -242,7 +279,7 @@ class Sistema:
                             archivo.write(i)
                         contador+=1
 
-            elif indice == 5:
+            elif indice == 9:
                 cc = int(input("Ingrese el Id del empleado para generar el txt: "))
                 nodo = self.busqueda(cc, "empleado-ID")
                 if nodo != None:
@@ -252,7 +289,7 @@ class Sistema:
                 else: 
                     print("Cedula incorrecta, vuelva a intentarlo")
 
-            elif indice == 6:
+            elif indice == 10:
                 # Atender solicitudes
                 # leer solicitudes en Control de cambio
                 control = open("Practica1/archivosSistema/solicitudes.txt", "r") 
@@ -295,9 +332,9 @@ class Sistema:
                                     concatenar+=i+" "
                                 else:
                                     concatenar+=i
-                            hora = datetime.datetime.now()
-                            concatenar+=f"  {hora.day} {hora.month} {hora.year} {hora.hour} {hora.minute} {hora.second}"
-                            texto[indice] = concatenar
+                                    hora = datetime.datetime.now()
+                                    concatenar+=f" {hora.day} {hora.month} {hora.year} {hora.hour} {hora.minute} {hora.second}"
+                                    texto[indice] = concatenar
                             
                             # Actualizar inventario general
                             idEmpleado,nombre,codigo,dia,mes,año,valor = nuevo[1:8]
@@ -348,17 +385,25 @@ class Sistema:
 
                             buscar = open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt", "r")
                             tex = buscar.read().split("\n")
-                            for i in tex:
-                                separao = i.split(" ")
-                                if int(separao[3]) == int(serie):
-                                    tex.remove(i)
                             buscar.close()
+                            for i in range(len(tex)):
+                                separao = tex[i].split(" ")
+                                if int(separao[3]) == int(serie):
+                                    separao[0] = "-"
+                                    separao[1] = "-"
+                                    tex[i] = " ".join(separao)
                             with open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt", "w") as ree:
                                 for i in tex:
                                     if i == tex[-1]:
                                         ree.write(i)  
                                     else:
                                         ree.write(i+"\n")
+                      
+                            temp = self._equipos.first()
+                            while temp != None:
+                                if int(temp.getData().getNoEquipo()) == int(serie):
+                                    self._equipos.remove(temp.getData())
+                                temp = temp.next()
 
                             print("Se ha eliminado correctamente")
                             comprobante = False
@@ -422,18 +467,18 @@ class Sistema:
                 else:
                     print("Indice inválido")
 
-            elif indice == 7: # generar txt solicitudes pendientes -----------------------------------------
+            elif indice == 11: # generar txt solicitudes pendientes -----------------------------------------
                 opcion = int(input("Desea ver solicitudes pendientes (1. agregar o 2. eliminar)?: "))
                 empleado.generarDocSolicitudes(opcion)
-            elif indice == 8: # generar txt gestion de cambios -------------------------------------------
+            elif indice == 12: # generar txt gestion de cambios -------------------------------------------
                 print("Se he generado correctamente un doc con la gestion de los cambios")
                 empleado.generarGestorCambios()
-            elif indice==9: # Generar txt gestor de cambios
+            elif indice==13: # Generar txt gestor de cambios
                 print("Se ha generado correctamente un doc con el inventario general")
-                empleado.generarInventario()
-            elif indice==10:
+                empleado.generarInventario(self)
+            elif indice==14:
                 empleado.consultarGestorCambios()
-            elif indice==11: # Salir del bucle
+            elif indice==15:
                 break
             else: 
                 print("Indice no válido")
@@ -557,10 +602,9 @@ class Sistema:
         temporal = primero.getData()
         primero.setData(segundo.getData())
         segundo.setData(temporal)
-
-        
-
-
+    
+    def getEquipos(self):
+        return self._equipos
 
 
 if __name__ == "__main__":
@@ -620,5 +664,10 @@ if __name__ == "__main__":
     contraseña = input("Ingrese su contraseña: ")
     sistema.accesoSistema(cedula,contraseña)
 
+    archivo1000 = open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt","w")
+    temp = sistema.getEquipos().first()
+    while True:
+        archivo1000.write(f"{temp.getData().getEmpleado().getNombre()} {temp.getData().getEmpleado().getId()} {temp.getData()}")
+        temp = temp.getNext()
 
 

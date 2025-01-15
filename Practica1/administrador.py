@@ -1,27 +1,12 @@
-from usuario import Usuario
+from investigador import Investigador
 from listaDoble import ListaDoble
 
-class Administrador(Usuario):
+class Administrador(Investigador):
 
     def __init__(self,nombre,cedula,fecha,ciudad_nacimiento,tel,email,direccion,equipos=None):
         super().__init__(nombre,int(cedula),fecha,ciudad_nacimiento,tel,email,direccion)
-        self._equipos = ListaDoble()
 
     # Métodos 
-    def agregarEquipo(self, equipo):
-        self._equipos.addFirst(equipo)
-
-    def consultaEquipos(self):
-        temporal = self._equipos.first()
-        if temporal != None:
-            print("________________________________________________________________________________________________________________________")
-            print("Equipos a nombre de ",self.getNombre(),":",sep="")
-            while temporal != None:
-                print("*",temporal.getData(),sep="")
-                temporal = temporal.getNext()
-            print("________________________________________________________________________________________________________________________")
-        else:
-            print("No hay equipos a nombre de ",self.getNombre(),":",sep="")
 
     def generarDocInventario(self, usuario):
         nombre = usuario.getNombre()
@@ -57,22 +42,22 @@ class Administrador(Usuario):
                         textoNuevo.append(concatenar)
                 with open("Practica1/archivos/Solicitudes_eliminar.txt", "w") as j:
                     for i in textoNuevo:
-                            linea = i.split(" ")
-                            stringEmpleado = " ".join(linea[:2])
-                            stringfinal = " ".join(linea[4:])
-                            historialI = open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt","r")
-                            stringEquipo = ""
-                            while True:
-                                equipo = historialI.readline()
-                                equipo = equipo.strip()
-                                if not equipo:
-                                    historialI.close()
-                                    break
-                                else:
-                                    codigo = equipo.split(" ")[3]
-                                    if int(codigo) == int(linea[2]):
-                                        stringEquipo = " ".join(equipo.split(" ")[2:])
-                            j.write(f"{stringEmpleado} {stringEquipo} {stringfinal}\n")
+                        linea = i.split(" ")
+                        stringEmpleado = " ".join(linea[:2])
+                        stringfinal = " ".join(linea[4:])
+                        historialI = open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt","r")
+                        stringEquipo = ""
+                        while True:
+                            equipo = historialI.readline()
+                            equipo = equipo.strip()
+                            if not equipo:
+                                historialI.close()
+                                break
+                            else:
+                                codigo = equipo.split(" ")[3]
+                                if int(codigo) == int(linea[2]):
+                                    stringEquipo = " ".join(equipo.split(" ")[2:])
+                        j.write(f"{stringEmpleado} {stringEquipo} {stringfinal}\n")
                             
                 print("Proceso realizado con éxito")
             elif conditional == 1: # Solis agregar-------------------------
@@ -149,17 +134,13 @@ class Administrador(Usuario):
                 else:
                     archiv.write(i+"\n")
     
-    def generarInventario(self):
-        with open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt", "r") as archimonde:
-            texto = archimonde.read().split("\n")
-
-            with open("Practica1/archivos/InventarioGeneral.txt", "w") as archiv:
-            # Escribir en el gestor de cambios
-                for i in texto:
-                    if i == texto[-1]:
-                        archiv.write(i)
-                    else:
-                        archiv.write(i+"\n")
+    def generarInventario(self,sistema):
+        with open("Practica1/archivos/InventarioGeneral.txt", "w") as archiv:
+        # Escribir en el gestor de cambios
+            temp = sistema.getEquipos().first()
+            while temp != None:
+                archiv.write(f"{temp.getData().getEmpleado().getNombre()} {temp.getData().getEmpleado().getId()} {temp.getData()} ")
+                temp = temporal.getNext()
 
     def consultarGestorCambios(self):
         # Generar archivo gestion cambios 
