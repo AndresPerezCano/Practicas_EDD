@@ -1,0 +1,12 @@
+Alberto-Guzman 1252535343 MONITOR_DELL 50245313 01 4 2016 300000 ya_no_lo_necesito eliminar pendiente
+Alberto-Guzman 1252535343 SILLA_GIRATORIA 50661212 04 5 2010 174900 Esta_deterioradoeliminar pendiente
+Alberto-Guzman 1252535343 WORKSTATION_DELL_T5810 50246324 01 4 2016 6495198 costo_elevado_mantenimientoeliminar pendiente
+Marta-Gonzales 3345345535 MONITOR_DELL 50245315 18 12 2006 600000 reemplazo_por_nuevo_equipoeliminar pendiente
+Marta-Gonzales 3345345535 SILLA_GIRATORIA 50661213 04 5 2010 174900 la_silla_no_es_muy_comodaeliminar pendiente
+Alizon-Peï¿½a 2342342343 TARJETA_ADQUISICION_DATOS 50234576 18 12 2010 23900000 falta_de_usoeliminar pendiente
+Alfredo-Ospina 3735737263 MONITOR_DELL 50245320 01 4 2016 300000 equipo_obsoletoeliminar pendiente
+Alfredo-Ospina 3735737263 TELEFONO_IP 50652400 21 12 2009 163800 reemplazo_por_nuevo_equipoeliminar pendiente
+Susana-Duque 3645274482 MONITOR_DELL 50245323 01 4 2016 300000 error_en_la_adquisicioneliminar pendiente
+Susana-Duque 3645274482 WORKSTATION_DELL_T5810 50246332 01 4 2016 6495198 equipo_dañadoeliminar pendiente
+Demetrio-Zapata 3277122442 ESTANTE_MADERA 50645680 10 12 2013 440000 mala_calidadeliminar pendiente
+Demetrio-Zapata 3277122442 MONITOR_DELL 50245314 01 4 2016 300000 dañadoeliminar pendiente

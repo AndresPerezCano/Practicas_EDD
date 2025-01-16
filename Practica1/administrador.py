@@ -4,7 +4,7 @@ from listaDoble import ListaDoble
 class Administrador(Investigador):
 
     def __init__(self,nombre,cedula,fecha,ciudad_nacimiento,tel,email,direccion,equipos=None):
-        super().__init__(nombre,int(cedula),fecha,ciudad_nacimiento,tel,email,direccion)
+        super().__init__(nombre,int(cedula),fecha,ciudad_nacimiento,tel,email,direccion,equipos)
 
     # Métodos 
 

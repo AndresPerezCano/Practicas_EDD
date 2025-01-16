@@ -71,14 +71,14 @@ class Sistema:
             indice = int(input("Ingrese un indice: "))
 
             if indice == 1:
-                empleado.getData().consultaEquipos()
+                empleado.consultaEquipos()
                 indice12 = input("Desea realizar otra accion si/no: ")
                 if indice12 == "si":
                     pass
                 elif indice12 == "no":
                     break
             elif indice == 2:
-                empleado.getData().adicionarEquipo()
+                empleado.adicionarEquipo()
                 indice12 = input("Desea realizar otra accion si/no: ")
                 if indice12 == "si":
                     pass
@@ -86,7 +86,7 @@ class Sistema:
                     break
 
             elif indice == 3:
-                empleado.getData().eliminarEquipo()
+                empleado.eliminarEquipo(self._equipos)
                 indice12 = input("Desea realizar otra accion si/no: ")
                 if indice12 == "si":
                     pass
@@ -94,7 +94,7 @@ class Sistema:
                     break
 
             elif indice == 4: 
-                empleado.getData().consultaEstadoSolicitudes()
+                empleado.consultaEstadoSolicitudes()
                 indice12 = input("Desea realizar otra accion si/no: ")
                 if indice12 == "si":
                     pass
@@ -102,7 +102,7 @@ class Sistema:
                     break
 
             elif indice == 5:
-                empleado.getData().archivoSolicitudes()
+                empleado.archivoSolicitudes()
                 indice12 = input("Desea realizar otra accion si/no: ")
                 if indice12 == "si":
                     pass
@@ -514,7 +514,7 @@ class Sistema:
                     break
 
             elif indice == 3:
-                empleado.getData().eliminarEquipo()
+                empleado.getData().eliminarEquipo(self._equipos)
                 indice12 = input("Desea realizar otra accion si/no: ")
                 if indice12 == "si":
                     pass

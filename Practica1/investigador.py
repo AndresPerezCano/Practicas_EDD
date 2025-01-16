@@ -33,11 +33,21 @@ class Investigador(Usuario):
         archivo.close()
         print("Solicitud realizada con exito: ")
     
-    def eliminarEquipo(self):
+    def eliminarEquipo(self,lista):
         codigo = int(input("Ingrese el codigo del equipo: "))
         descripcion = input("Escriba una breve explicacion de porque se desea eliminar: ")
         archivo = open("Practica1/archivosSistema/solicitudes.txt", "a")
         archivo.write(f"\n{self._nombre} {self._id} {codigo} {descripcion.replace(' ','_')} eliminar pendiente")
+        archivo.close()
+        temp = lista.first()
+        while temp != None:
+            if codigo != int(temp.getData().getNoPlaca()):
+                temp = temp.getNext()
+            else:
+                break
+        equipo = temp.getData()
+        archivo1 = open("Practica1/archivosSistema/equiposEliminados.txt", "a")
+        archivo1.write(f"\n{self._nombre} {self._id} {equipo.getNombre()} {equipo.getNoPlaca()} {equipo.getFecha().getDia():02d} {equipo.getFecha().getMes()} {equipo.getFecha().getA()} {equipo.getValor()} {descripcion.replace(' ','_')}eliminar pendiente")
         archivo.close()
         print("Solicitud realizada con exito: ")
 
@@ -55,7 +65,7 @@ class Investigador(Usuario):
                 solicitud = solicitud.split(" ")
                 if int(solicitud[1]) == self._id:
                     if len(solicitud) == 6 or len(solicitud) == 12:
-                        historialI = open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt","r")
+                        historialI = open("Practica1/archivosSistema/equiposEliminados.txt","r")
                         while True:
                             equipo = historialI.readline()
                             equipo = equipo.strip()
@@ -65,7 +75,7 @@ class Investigador(Usuario):
                             else:
                                 codigo = equipo.split(" ")[3]
                                 if codigo == solicitud[2]:
-                                    print(f"* {self._nombre} {self._id}",*equipo.split(" ")[2:],*solicitud[4:])
+                                    print(f"* {self._nombre} {self._id}",*equipo.split(" ")[2:8],*equipo.split(" ")[9:])
                             
                     elif len(solicitud) == 10 or len(solicitud) == 16:
                         print("*",*solicitud[:10],)
@@ -92,7 +102,8 @@ class Investigador(Usuario):
                 listaSolicitud = solicitud.split(" ")
                 if int(listaSolicitud[1]) == self._id:
                     if len(listaSolicitud) == 6 or len(listaSolicitud) == 12:
-                        historialI = open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt","r")
+                        
+                        historialI = open("Practica1/archivosSistema/equiposEliminados.txt","r")
                         while True:
                             equipo = historialI.readline()
                             equipo = equipo.strip()
@@ -102,9 +113,8 @@ class Investigador(Usuario):
                             else:
                                 codigo = equipo.split(" ")[3]
                                 if codigo == listaSolicitud[2]:
-                                    stringEquipo = " ".join(equipo.split(" ")[2:])
-                                    stringSolicitud = " ".join(listaSolicitud[4:7])
-                                    archivoSolicitudes.write(f"{self._nombre} {self._id} {stringEquipo} {stringSolicitud}\n")
+                                    stringEquipo = " ".join(equipo.split(" ")[2:8])
+                                    archivoSolicitudes.write(f"{self._nombre} {self._id} {stringEquipo} eliminar aceptar\n")
                             
                     elif len(listaSolicitud) == 10 or len(listaSolicitud) == 16:
                         string = " ".join(listaSolicitud[:10])
