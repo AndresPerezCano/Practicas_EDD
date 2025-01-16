@@ -29,7 +29,7 @@ class Investigador(Usuario):
         datos = input("nombre del equipo - No.Placa - fecha de compra(dia mes año) - valor de compra: ")
         nombreE,NoPlaca,dia,mes,año,valor = datos.split(" ")
         archivo = open("Practica1/archivosSistema/solicitudes.txt", "a")
-        archivo.write(f"{self._nombre} {self._id} {nombreE} {NoPlaca} {dia} {mes} {año} {valor} agregar pendiente\n")
+        archivo.write(f"\n{self._nombre} {self._id} {nombreE} {NoPlaca} {dia} {mes} {año} {valor} agregar pendiente")
         archivo.close()
         print("Solicitud realizada con exito: ")
     
@@ -37,7 +37,7 @@ class Investigador(Usuario):
         codigo = int(input("Ingrese el codigo del equipo: "))
         descripcion = input("Escriba una breve explicacion de porque se desea eliminar: ")
         archivo = open("Practica1/archivosSistema/solicitudes.txt", "a")
-        archivo.write(f"{self._nombre} {self._id} {codigo} {descripcion.replace(' ','_')} eliminar pendiente\n")
+        archivo.write(f"\n{self._nombre} {self._id} {codigo} {descripcion.replace(' ','_')} eliminar pendiente")
         archivo.close()
         print("Solicitud realizada con exito: ")
 

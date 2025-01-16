@@ -373,9 +373,10 @@ class Sistema:
                         print(serie)
                         temp = self._equipos.first()
                         while True:
-                            if int(temp.getData().getNoPlaca()) == int(serie):
+                            if temp==None:
+                                print("No se encontró el equipo en el inventario.")
                                 break
-                            elif temp == None:
+                            elif int(temp.getData().getNoPlaca()) == int(serie) :
                                 break
                             temp = temp.getNext()
 
@@ -386,6 +387,8 @@ class Sistema:
                             buscar = open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt", "r")
                             tex = buscar.read().split("\n")
                             buscar.close()
+                            if tex[-1] == "":
+                                tex.pop(-1)
                             for i in range(len(tex)):
                                 separao = tex[i].split(" ")
                                 if int(separao[3]) == int(serie):
@@ -401,9 +404,9 @@ class Sistema:
                       
                             temp = self._equipos.first()
                             while temp != None:
-                                if int(temp.getData().getNoEquipo()) == int(serie):
+                                if int(temp.getData().getNoPlaca()) == int(serie):
                                     self._equipos.remove(temp.getData())
-                                temp = temp.next()
+                                temp = temp.getNext()
 
                             print("Se ha eliminado correctamente")
                             comprobante = False
@@ -650,11 +653,15 @@ if __name__ == "__main__":
         if not equipo:
             break
         else:
-            empleado,cedula,nombre,NoPlaca,dia,mes,año,valor = equipo.split(" ")
-            empleado1 = sistema.busqueda(empleado,"empleado-nombre").getData()
-            equipo1 = Equipo(nombre,NoPlaca,Fecha(int(dia),int(mes),int(año)),valor,empleado1)
-            empleado1.agregarEquipo(equipo1)
-            sistema._equipos.addLast(equipo1)
+            temp = equipo.split(" ")
+            if "-" in temp:
+                pass
+            else:
+                empleado,cedula,nombre,NoPlaca,dia,mes,año,valor = equipo.split(" ")
+                empleado1 = sistema.busqueda(empleado,"empleado-nombre").getData()
+                equipo1 = Equipo(nombre,NoPlaca,Fecha(int(dia),int(mes),int(año)),valor,empleado1)
+                empleado1.agregarEquipo(equipo1)
+                sistema._equipos.addLast(equipo1)
 
 
     archivoEquipos.close()
@@ -667,7 +674,8 @@ if __name__ == "__main__":
     archivo1000 = open("Practica1/archivosSistema/inventarioCentroDeInvestigacion.txt","w")
     temp = sistema.getEquipos().first()
     while temp != None:
-        archivo1000.write(f"{temp.getData().getEmpleado().getNombre()} {temp.getData().getEmpleado().getId()} {temp.getData()}")
+        if temp.getData()!=sistema._equipos.last:
+            archivo1000.write(f"{temp.getData().getEmpleado().getNombre()} {temp.getData().getEmpleado().getId()} {temp.getData()}\n")
+        else:
+            archivo1000.write(f"{temp.getData().getEmpleado().getNombre()} {temp.getData().getEmpleado().getId()} {temp.getData()}")
         temp = temp.getNext()
-
-

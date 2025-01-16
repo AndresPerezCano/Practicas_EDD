@@ -57,7 +57,7 @@ class Administrador(Investigador):
                                 codigo = equipo.split(" ")[3]
                                 if int(codigo) == int(linea[2]):
                                     stringEquipo = " ".join(equipo.split(" ")[2:])
-                        j.write(f"{stringEmpleado} {stringEquipo} {stringfinal}\n")
+                        j.write(f"\n{stringEmpleado} {stringEquipo} {stringfinal}")
                             
                 print("Proceso realizado con éxito")
             elif conditional == 1: # Solis agregar-------------------------
@@ -139,8 +139,8 @@ class Administrador(Investigador):
         # Escribir en el gestor de cambios
             temp = sistema.getEquipos().first()
             while temp != None:
-                archiv.write(f"{temp.getData().getEmpleado().getNombre()} {temp.getData().getEmpleado().getId()} {temp.getData()} ")
-                temp = temporal.getNext()
+                archiv.write(f"{temp.getData().getEmpleado().getNombre()} {temp.getData().getEmpleado().getId()} {temp.getData()} \n")
+                temp = temp.getNext()
 
     def consultarGestorCambios(self):
         # Generar archivo gestion cambios 
