@@ -89,6 +89,24 @@ def camino_Mas_corto_KM(Origen,Destino):
     else:
       print(f"{ciudad} - ",end="")
   
+def camino_Mas_corto_Minutos(Origen,Destino):
+  valores, predecesores =  DIJKSTRA(G,WMin,Origen)
+  print(f"El tiempo en minutos del camino mas entre {Origen} y {Destino} es: {valores[Destino]}")
+  camino = []
+  valor = Destino
+  while True:
+    if valor != Origen:
+      camino.insert(0,valor)
+      valor = predecesores[valor]
+    else:
+      camino.insert(0,Origen)
+      break
+  print("El recorrido es: [",end="")
+  for ciudad in camino:
+    if ciudad == Destino:
+      print(f"{ciudad}]")
+    else:
+      print(f"{ciudad} - ",end="")
 #Pedir al usuario:
 while True:
     print("Que busqueda desea realizar: ")
@@ -112,7 +130,15 @@ while True:
             break
     
     elif indice == 3:
-        pass
+        origen = input("Ingrese la ciudad de origen: ")
+        destino = input("Ingrese la ciudad de destino: ")
+        camino_Mas_corto_Minutos(origen,destino)
+
+        indice1 = input("Desea realizar otra acción(si/no): ")
+        if indice1 == "si":
+            pass
+        else: 
+            break
     
     elif indice == 4:
         break
