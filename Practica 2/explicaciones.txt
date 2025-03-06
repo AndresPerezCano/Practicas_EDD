@@ -1,0 +1,28 @@
+Método has_edge():
+NetworkX utiliza una estructura de diccionarios de diccionarios para representar grafos. 
+Cada nodo tiene un diccionario que mapea a sus vecinos y, opcionalmente, los atributos de las aristas.
+Para grafos no dirigidos (Graph), las aristas se almacenan en ambos nodos (simetría).
+
+En un grafo no dirigido, la arista (u, v) se almacena tanto en la lista de adyacencia de u como en la de v.
+ Internamente, la estructura es un diccionario de diccionarios llamada _adj:
+
+ Ejemplo:
+Si tenemos un grafo con aristas (1, 2) y (2, 3), el diccionario _adj sería:
+
+python
+Copy
+{
+    1: {2: {}},
+    2: {1: {}, 3: {}},
+    3: {2: {}}
+}
+Al llamar has_edge(1, 2), se verifica si 2 está en _adj[1] → True.
+
+Al llamar has_edge(1, 3), se verifica si 3 está en _adj[1] → False.
+
+has_edge() tiene complejidad O(1) en promedio, gracias a los diccionarios (hash tables) en Python. Es muy eficiente.
+
+Manejo de Nodos Inexistentes:
+
+Si alguno de los nodos (u o v) no existe, el método retorna False sin lanzar error (por el uso de self._adj.get(u, {})).
+

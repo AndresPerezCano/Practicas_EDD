@@ -1,0 +1,93 @@
+Estructura del Código
+1. initialize_single_source(G, s)
+Propósito: Inicializa las estructuras de datos para almacenar distancias (d) y predecesores (pi).
+
+Funcionamiento:
+
+d: Diccionario donde d[u] almacena la distancia mínima conocida desde s hasta u. Inicialmente, todos los nodos tienen distancia sys.maxsize (infinito), excepto s (distancia 0).
+
+pi: Diccionario para reconstruir caminos. pi[u] guarda el predecesor de u en el camino más corto.
+
+2. relax(u, v, W, d, pi)
+Propósito: Relajar una arista (u, v), actualizando la distancia de v si se encuentra un camino más corto a través de u.
+
+Funcionamiento:
+
+Si d[v] > d[u] + peso(u, v), actualiza d[v] y establece pi[v] = u.
+
+Ejemplo: Si u tiene distancia 5 y la arista (u, v) tiene peso 2, y d[v] es 10, entonces d[v] se actualiza a 7.
+
+3. DIJKSTRA(G, W, s)
+Propósito: Implementa el algoritmo de Dijkstra usando una cola de prioridad (min-heap).
+
+Variables clave:
+
+Sv: Lista de nodos ya procesados (su distancia mínima está confirmada).
+
+Q: Cola de prioridad que almacena pares (distancia, nodo).
+
+Flujo:
+
+Inicialización: Llama a initialize_single_source y añade el nodo origen s a Q.
+
+Bucle principal:
+
+Extrae el nodo u con menor distancia actual de Q.
+
+Si u ya está en Sv, lo ignora.
+
+Añade u a Sv (ya no se procesará de nuevo).
+
+Para cada vecino v de u, relaja la arista (u, v) y añade v a Q con su nueva distancia.
+
+Retorno: Las distancias finales (d) y predecesores (pi).
+
+Ejemplo Paso a Paso
+Supongamos un grafo con nodos A, B, C y aristas:
+
+A -> B (peso 1)
+
+B -> C (peso 2)
+
+A -> C (peso 4).
+
+Iteraciones del Algoritmo:
+Inicialización:
+
+d = {'A': 0, 'B': ∞, 'C': ∞}
+
+Q = [(0, A)].
+
+Primera extracción:
+
+u = A (distancia 0).
+
+Actualiza Sv = [A].
+
+Relaja aristas de A:
+
+A -> B: d[B] = 1, se añade (1, B) a Q.
+
+A -> C: d[C] = 4, se añade (4, C) a Q.
+
+Segunda extracción:
+
+u = B (distancia 1).
+
+Actualiza Sv = [A, B].
+
+Relaja B -> C: d[C] = 1 + 2 = 3, se añade (3, C) a Q.
+
+Tercera extracción:
+
+u = C (distancia 3).
+
+Actualiza Sv = [A, B, C].
+
+No hay más nodos en Q.
+
+Resultado final:
+
+d = {'A': 0, 'B': 1, 'C': 3}
+
+pi = {'A': None, 'B': 'A', 'C': 'B'}.
