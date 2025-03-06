@@ -72,7 +72,7 @@ WKm = {node: {neighbor: Grafo[node][neighbor]['km'] for neighbor in Grafo.neighb
 WMin = {node: {neighbor: Grafo[node][neighbor]['minutos'] for neighbor in Grafo.neighbors(node)} for node in Grafo.nodes}
 def camino_Mas_corto_KM(Origen,Destino):
   valores, predecesores =  DIJKSTRA(G,WKm,Origen)
-  print(f"La distancia mas corta en Km entre {Origen} y {Destino} es: {valores[Destino]}")
+  print(f"La distancia mas corta en Km entre {Origen} y {Destino} es: {valores[Destino]} Kilometros")
   camino = []
   valor = Destino
   while True:
@@ -91,7 +91,7 @@ def camino_Mas_corto_KM(Origen,Destino):
   
 def camino_Mas_corto_Minutos(Origen,Destino):
   valores, predecesores =  DIJKSTRA(G,WMin,Origen)
-  print(f"El tiempo en minutos del camino mas entre {Origen} y {Destino} es: {valores[Destino]}")
+  print(f"El tiempo en minutos del camino mas entre {Origen} y {Destino} es: {valores[Destino]} minutos")
   camino = []
   valor = Destino
   while True:
@@ -107,17 +107,28 @@ def camino_Mas_corto_Minutos(Origen,Destino):
       print(f"{ciudad}]")
     else:
       print(f"{ciudad} - ",end="")
+
+# Existe camino método
+def existe_camino(origen, destino):
+  if Grafo.has_edge(origen, destino):
+    print(f"\nSi existe un camino directo entre {origen} y {destino}\n")
+  else:
+    print(f"\nNo existe un camino directo entre {origen} y {destino}\n")
+
 #Pedir al usuario:
 while True:
     print("Que busqueda desea realizar: ")
-    print("1.......")
+    print("1.Determinar si existe un camino entre A y B: ")
     print("2.Determinar el camino más corto(Km) entre A Y B: ")
     print("3.Determinar el camino más corto(Minutos) entre A Y B: ")
     print("4.Salir")
     indice = int(input("Ingrese indice: "))
+
     if indice == 1:
-        pass
-    
+        origen = input("Ingrese la ciudad de origen: ")
+        destino = input("Ingrese la ciudad de destino: ")
+        existe_camino(origen, destino)
+
     elif indice == 2:
         origen = input("Ingrese la ciudad de origen: ")
         destino = input("Ingrese la ciudad de destino: ")

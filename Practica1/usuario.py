@@ -53,3 +53,10 @@ class Usuario:
 
     def __str__(self):
         return f"{self.getNombre()}/{self.getId()}/{self.getFecha_nacimiento().getDia():02d}-{self.getFecha_nacimiento().getMes():02d}-{self.getFecha_nacimiento().getA():02d}/{self.getCiudad_nacimiento()}/{self.getTel()}/{self.getEmail()}/{self.getDir()}"
+    
+""""pos = nx.layout.planar_layout(Grafo)
+nx.draw_networkx(Grafo,pos)
+labels = nx.get_edge_attributes(Grafo, "Minutos")
+nx.draw_networkx_edge_labels(Grafo, pos=pos, edge_labels=labels)
+plt.title("Grafo")
+plt.show()"""
